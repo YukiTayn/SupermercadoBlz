@@ -9,6 +9,15 @@ public class Produtos {
 	String marca;
 	Calendar dataValidade;
 	String tipo;
+	long quantidade;
+
+	public long getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(long quantidade) {
+		this.quantidade = quantidade;
+	}
 
 	public Long getId() {
 		return id;

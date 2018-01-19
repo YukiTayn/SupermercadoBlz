@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import supermercado.controller.comandos.Comando;
 
 
-
 @WebServlet("/supermercado")
 public class SupermercadoServlet extends HttpServlet {
 	@Override
