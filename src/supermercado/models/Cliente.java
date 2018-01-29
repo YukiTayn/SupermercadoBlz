@@ -1,6 +1,5 @@
 package supermercado.models;
 
-
 import java.util.Calendar;
 
 public class Cliente {
@@ -11,6 +10,11 @@ public class Cliente {
 	String endereco;
 	Calendar datanascimento;
 	String email;
+	String telefone;
+
+	public String getTelefone() {
+		return telefone;
+	}
 
 	public String getNome() {
 		return nome;
@@ -58,5 +62,10 @@ public class Cliente {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public void setTelefone(String telefone) {
+		this.setTelefone(telefone);
+
 	}
 }

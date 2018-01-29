@@ -1,8 +1,9 @@
-package supermercado.controller.comandos;
+package supermercado.controller.comandos.produto;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import supermercado.controller.comandos.Comando;
 import supermercado.daos.ProdutoDAO;
 import supermercado.models.Produtos;
 
