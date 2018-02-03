@@ -28,15 +28,22 @@ public class DadosController {
 	}
 	
 	@RequestMapping(value="dados/apagar", method=RequestMethod.GET)
+	public ModelAndView apagar() {
+		
+		ModelAndView modelAndView = new ModelAndView("dados/apagar");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value="dados/apagar", method=RequestMethod.POST)
 	public ModelAndView apagar(String email, String senha) {
 		
 		d.setEmail(email);
 		d.setSenha(senha);
 		
 		if(ddao.remover(d) == true) {
-			//
+			System.out.println("Apagado com sucesso");
 		}else {
-			//
+			System.out.println("Erro ao apagar");
 		}
 		
 		return listar();

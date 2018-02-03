@@ -16,19 +16,22 @@ public class ProdutosController {
 	ProdutoDAO pdao = new ProdutoDAO();
 	Produto p = new Produto();
 	
-	//Link do cadastro
+	//Link
 	@RequestMapping("produtos/novo")
-	public String linkCadastro() {
+	public ModelAndView linkCadastro() {
 		
-		return "produtos/cadastro";
+		ModelAndView modelAndView = new ModelAndView("produtos/form");
+		
+		return modelAndView;
 	}
 	
+	
 	//Funções
+	@RequestMapping(value="produtos/novo", method=RequestMethod.POST)
 	public ModelAndView cadastro(Produto p) {
 		
-		
-		
-		return null;
+		pdao.inserir(p);
+		return listar();
 		
 	}
 	
@@ -57,7 +60,9 @@ public class ProdutosController {
 	@RequestMapping(value="produtos/remover", method=RequestMethod.GET)
 	public ModelAndView remover(long id) {
 		
-		return null;
+		pdao.apagar(id);
+		return listar();
+		
 	}
 	
 	

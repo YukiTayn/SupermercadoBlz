@@ -131,4 +131,49 @@ public class ProdutoDAO {
 		
 		return result;
 	}
+	
+	public boolean inserir(Produto p) {
+		
+		String sql = "insert into produto(nome, dataValidade, tipo, quantidade, preco) " + 
+		"value(?,?,?,?,?);";
+				
+		try {
+			
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			stmt.setString(1, p.getNome());
+			stmt.setDate(2, new java.sql.Date(p.getDataValidade().getTimeInMillis()));
+			stmt.setString(3, p.getTipo());
+			stmt.setLong(4, p.getQuantidade());
+			stmt.setFloat(5, p.getPreco());
+			
+			stmt.execute();
+			stmt.close();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+			// TODO: handle exception
+		}
+		
+		return true;
+	}
+	
+	public boolean apagar(long id) {
+		
+		try {
+			
+			PreparedStatement stmt = this.connection.prepareStatement("delete from produto where id = ?");
+			stmt.setLong(1, id);
+			
+			stmt.execute();
+			stmt.close();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+			// TODO: handle exception
+		}
+		
+		return true;
+	}
 }
