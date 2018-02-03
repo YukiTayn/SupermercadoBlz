@@ -7,14 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<form action="/smercado/login" method="post">
-
-Email: <input type="text" name="email"><br>
-Senha: <input type="password" name="senha"><br>
-<p>
-<input type="submit">
-</form>
-
+Deu algum erro
 </body>
 </html>

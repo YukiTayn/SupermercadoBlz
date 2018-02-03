@@ -19,7 +19,6 @@ public class DadosDAO {
 		connection = ConnectionFactory.getConnection();
 	}
 	
-	UserDAO udao = new UserDAO();
 	
 	public List<Dados> getLista(){
 		List<Dados> result = new ArrayList<>();
@@ -156,6 +155,35 @@ public class DadosDAO {
 		}
 
 		return result;
+	}
+	
+	public boolean login(String email, String senha) {
+
+		int aux = 0;
+
+		try {
+			PreparedStatement stmt = this.connection
+					.prepareStatement("select count(*) as tst from dados where email=? and senha=?;");
+			stmt.setString(1, email);
+			stmt.setString(2, senha);
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				aux = rs.getInt("tst");
+
+				if (aux > 0 && aux < 5) {
+					return true;
+				}
+
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			return false;
+		}
+
+		return false;
 	}
 	
 	//Funcionais
