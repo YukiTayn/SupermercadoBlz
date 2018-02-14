@@ -97,8 +97,9 @@ public class DadosDAO {
 			stmt.close();
 			
 		}catch (Exception e) {
+			
 			e.printStackTrace();
-			// TODO: handle exception
+	
 		}
 		
 		return aux;
@@ -157,33 +158,52 @@ public class DadosDAO {
 		return result;
 	}
 	
-	public boolean login(String email, String senha) {
+	public int login(Dados d) {
 
 		int aux = 0;
 
 		try {
 			PreparedStatement stmt = this.connection
 					.prepareStatement("select count(*) as tst from dados where email=? and senha=?;");
-			stmt.setString(1, email);
-			stmt.setString(2, senha);
+			stmt.setString(1, d.getEmail());
+			stmt.setString(2, d.getSenha());
 			ResultSet rs = stmt.executeQuery();
 
 			if (rs.next()) {
 				aux = rs.getInt("tst");
-
-				if (aux > 0 && aux < 5) {
-					return true;
-				}
 
 			}
 
 		} catch (Exception e) {
 
 			e.printStackTrace();
-			return false;
+			
 		}
 
-		return false;
+		return aux;
+	}
+	
+	public int existe(String email) {
+		
+		int aux = 0;
+		
+		try {
+			
+			PreparedStatement stmt = this.connection.prepareStatement("select count(*) as tst from dados where email=?;");
+			stmt.setString(1, email);
+			ResultSet rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				aux = rs.getInt("tst");
+			}
+			
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		
+		return aux;
 	}
 	
 	//Funcionais

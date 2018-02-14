@@ -2,8 +2,12 @@ package sm.models;
 
 import java.util.Calendar;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Component;
 
+@Component
+@Scope("session")
 public class Dados {
 
 	private long id;
