@@ -57,6 +57,31 @@ public class DadosDAO {
 		return result;
 	}
 	
+	public int getTipoByEmail(String email) {
+		
+		int aux = 0;
+
+		try {
+			PreparedStatement stmt = this.connection
+					.prepareStatement("select tipo from dados where email=?;");
+			stmt.setString(1, email);
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				aux = rs.getInt("tipo");
+			}
+			rs.close();
+			stmt.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+
+		return aux;
+		
+	}
+	
 	public int getTipo(String email, String senha) {
 		int aux = 0;
 

@@ -95,6 +95,15 @@ body {
 
 	<div id="PedidosP" class="tabcontent">
 		<table border=1>
+
+			<tr>
+				<th>ID</th>
+				<th>Entregador</th>
+				<th>Produto</th>
+				<th>Quantidade</th>
+				<th>Data</th>
+				<th>Ação</th>
+			</tr>
 			<c:forEach var="pegas" items="${pegas}">
 				<tr>
 					<td>${pegas.id}</td>

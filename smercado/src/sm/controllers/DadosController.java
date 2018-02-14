@@ -87,10 +87,10 @@ public class DadosController {
 	
 	@RequestMapping(value="dados/login", method=RequestMethod.GET)
 	public String login() {
-		return null;
+		return "login/form";
 	}
 	
-	@RequestMapping(value="dados/login", method=RequestMethod.POST)
+	@RequestMapping(value="login", method=RequestMethod.POST)
 	public ModelAndView login(Dados d, HttpSession s) {
 		
 		ModelAndView mav = new ModelAndView();
@@ -99,9 +99,14 @@ public class DadosController {
 			
 			if(ddao.login(d) == 1) {
 				
+				s.setAttribute("email", d.getEmail());
 				int tipo = ddao.getTipo(d.getEmail(), d.getSenha());
 				
-				/*if(tipo == 1) {
+				System.out.println(d.getEmail());
+				System.out.println(d.getSenha());
+				System.out.println(tipo);
+				
+				if(tipo == 1) {
 					return loginCliente(d.getEmail());
 				}
 				if(tipo == 2) {
@@ -115,29 +120,27 @@ public class DadosController {
 				}
 				if(tipo == 5) {
 					return loginEntreg(d.getEmail());
-				}*/
-				
-				System.out.println(d.getEmail());
-				System.out.println(d.getSenha());
-				System.out.println(tipo);
-				
+				}
+
 				
 			}else {
 				System.out.println("Erro nas entradas");
+				return null;
 			}
 			
 		}else {
 			System.out.println("Email não existe");
+			return null;
 		}
 		
-		
 		return null;
+		
 	}
 	
 	public ModelAndView loginCliente(String email) {
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("");
+		mav.setViewName("usuarios/1");
 		
 		long id = ddao.getID(email);
 		
@@ -153,7 +156,7 @@ public class DadosController {
 	public ModelAndView loginVend(String email) {
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("");
+		mav.setViewName("usuarios/2");
 		
 		long id = ddao.getID(email);
 		
@@ -168,7 +171,7 @@ public class DadosController {
 	public ModelAndView loginGerente(String email) {
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("");
+		mav.setViewName("usuarios/3");
 		
 		List<Entregas> abertas = edao.Abertas();
 		List<Entregas> pegas = edao.Pegas();
@@ -185,7 +188,7 @@ public class DadosController {
 	public ModelAndView loginAdmin(String email) {
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("");
+		mav.setViewName("usuarios/4");
 		
 		List<Vendas> vendas = vdao.getVendas();
 		mav.addObject("vendas", vendas);
@@ -196,7 +199,7 @@ public class DadosController {
 	public ModelAndView loginEntreg(String email) {
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("");
+		mav.setViewName("usuarios/5");
 		
 		long id = ddao.getID(email);
 		
@@ -210,6 +213,13 @@ public class DadosController {
 		mav.addObject("neg", neg);
 		
 		return mav;
+	}
+	
+	@RequestMapping("logout")
+	public String logout(HttpSession s) {
+		
+		s.invalidate();
+		return "redirect:/";
 	}
 	
 	//Chamados dos forms

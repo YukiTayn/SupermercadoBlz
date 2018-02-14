@@ -83,7 +83,7 @@ body {
 		</table>
 	</div>
 
-	<div id="ComprasO" class="tabcontent">
+	<div id="Produtos" class="tabcontent">
 		<table border="1">
 
 			<tr>
@@ -96,19 +96,25 @@ body {
 				<th>Vender</th>
 			</tr>
 
-			<c:forEach var="prod" items="${prod}">
+			<c:forEach var="produtos" items="${produtos}">
 				<tr>
-					<td>${prod.id}</td>
-					<td>${prod.nome}</td>
-					<td>${prod.tipo}</td>
-					<td>${prod.quantidade}</td>
-					<td><fmt:formatDate value="${prod.dataValidade.time}"
+					<td>${produtos.id}</td>
+					<td>${produtos.nome}</td>
+					<td>${produtos.tipo}</td>
+					<td>${produtos.quantidade}</td>
+					<td><fmt:formatDate value="${produtos.dataValidade.time}"
 							pattern="dd/MM/yyyy" /></td>
-					<td>${prod.preco}</td>
-					<td><a href="v?act=Vendedor&id=${prod.id}">Aqui</a></td>
+					<td>${produtos.preco}</td>
+					<td><a href="v?act=Vendedor&id=${produtos.id}">Aqui</a></td>
 				</tr>
 			</c:forEach>
 		</table>
+		<br><br>
+		<h3>Pesquisa: </h3><br>
+		<form action="/smercado/produtos/pesquisa" method="POST">
+			Nome: <input type=text name=nome>
+			<button type=submit>Pesquisar</button>
+		</form>
 	</div>
 
 

@@ -19,6 +19,32 @@ public class EntregasDAO {
 
 	ProdutoDAO pdao = new ProdutoDAO();
 	DadosDAO ddao = new DadosDAO();
+	
+	
+	public List<Entregas> getEnt(){
+		List<Entregas> result = new ArrayList<>();
+		
+		try {
+			PreparedStatement stmt = this.connection.prepareStatement("select * from entregas;");
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				Entregas e = new Entregas();
+				e.setId(rs.getLong("id"));
+				e.setGerente(rs.getLong("id_gerente"));
+				e.setEntregador(rs.getLong("id_entregador"));
+				e.setProduto(rs.getLong("id_produto"));
+				e.setQtd(rs.getLong("qtd"));
+				
+				result.add(e);
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return result;
+	}
+	
 
 	public List<Entregas> Abertas() {
 		List<Entregas> result = new ArrayList<>();
@@ -228,6 +254,9 @@ public class EntregasDAO {
 		return result;
 	}
 
+	
+	
+	
 	public List<Entregas> getEntAbID(Long id) {
 		List<Entregas> result = new ArrayList<>();
 
@@ -424,6 +453,9 @@ public class EntregasDAO {
 		return result;
 	}
 
+	
+	
+	
 	public boolean FecharEntrega(long id) {
 
 		try {

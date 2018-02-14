@@ -48,9 +48,9 @@ public class ProdutosController {
 	}
 	
 	@RequestMapping(value="produtos/pesquisa", method=RequestMethod.POST)
-	public ModelAndView pesquisa(String algo) {
+	public ModelAndView pesquisa(Produto p) {
 		
-		List<Produto> pesq = pdao.prodByName(algo);
+		List<Produto> pesq = pdao.prodByName(p.getNome());
 		ModelAndView modelAndView = new ModelAndView("produtos/pesquisa");
 		modelAndView.addObject("pesq", pesq);
 		
@@ -58,10 +58,11 @@ public class ProdutosController {
 	}
 	
 	@RequestMapping(value="produtos/remover", method=RequestMethod.GET)
-	public ModelAndView remover(long id) {
+	public String remover(long id) {
 		
 		pdao.apagar(id);
-		return listar();
+		
+		return "redirect:produtos";
 		
 	}
 	
