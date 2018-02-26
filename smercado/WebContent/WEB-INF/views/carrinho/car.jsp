@@ -9,30 +9,36 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<h1>Carrinho</h1>
 
-	<h1>Lista de Produtos</h1>
+	<table border=1>
 
-	<table border="1">
 		<tr>
-			<th>Nome</th>
-			<th>Tipo</th>
+			<th>Índice</th>
+			<th>Produto</th>
 			<th>Quantidade</th>
 			<th>Preço</th>
-			<th>Ação</th>
-			<th>"Comprar"</th>
+			<th>Subtotal</th>
+			<th>Retirar</th>
 		</tr>
 
-		<c:forEach var="prod" items="${prod}">
+
+		<c:forEach var="lista" items="${carrinho}">
 			<tr>
-				<td>${prod.nome}</td>
-				<td>${prod.tipo}</td>
-				<td>${prod.quantidade}</td>
-				<td>${prod.preco}</td>
-				<td><a href="/smercado/produtos/remover?id=${prod.id}">Remover</a></td>
-				<td><a href="/smercado/carrinho?id=${prod.id}">Comprar</a></td>
+				<td>${lista.indice}</td>
+				<td>${lista.produto}</td>
+				<td>${lista.quantidade}</td>
+				<td>${lista.preco}</td>
+				<td>${lista.total}</td>
+				<td><a href="retirar?indice=${lista.indice}">Aqui</a></td>
 			</tr>
 		</c:forEach>
 	</table>
 
+<br><br>
+<a href="/smercado/concluir">Concluir compra</a><br>
+<a href="/smercado/produtos">Comprar mais</a><br>
+<a href="cancelar">Cancelar TODA a compra</a><br>
+<a href="/smercado/">Voltar ao index</a>
 </body>
 </html>

@@ -178,16 +178,13 @@ body {
 
 		<form action="e" method="post">
 			<div>
-				<label>Gerente: </label><input type="text" name="gerente"> <label>Entregador:
-				</label><input type="text" name="ent">
-			</div>
-			<div>
-				<label>Produto: </label><input type="text" name="prod"> <label>Quantidade:
-				</label><input type="text" name="qtd">
+				<label>Gerente: </label><input type="text" name="gerente"> <br>
+				<label>Entregador:</label><input type="text" name="ent"><br>
+				<label>Produto: </label><input type="text" name="prod"> <br>
+				<label>Quantidade:</label><input type="text" name="qtd"> <br>
 			</div>
 			<div>
 				<button type="submit">Nova</button>
-				<input type="hidden" name="act" value="Nova">
 			</div>
 		</form>
 

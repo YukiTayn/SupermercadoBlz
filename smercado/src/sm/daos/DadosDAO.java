@@ -297,5 +297,36 @@ public class DadosDAO {
 		
 		return true;
 	}
+
+
+	public List<Dados> getContas() {
+		List<Dados> result = new ArrayList<>();
+		
+		try {
+			
+			PreparedStatement stmt = this.connection.prepareStatement("select * from dados;");
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				Dados d = new Dados();
+				d.setNome(rs.getString("nome"));
+				d.setEmail(rs.getString("email"));
+				d.setSenha(rs.getString("senha"));
+				
+				result.add(d);
+			}
+			
+			
+			
+			rs.close();
+			stmt.close();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		
+		return result;
+	}
 	
 }

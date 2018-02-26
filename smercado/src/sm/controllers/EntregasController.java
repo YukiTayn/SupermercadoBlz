@@ -23,9 +23,16 @@ public class EntregasController {
 	
 	//Link
 	@RequestMapping("entregas/nova")
-	public String formEntrega() {
+	public String formEntrega(HttpSession s) {
 		
-		return "entregas/form";
+		String email = (String) s.getAttribute("email");
+		
+		if(ddao.getTipoByEmail(email) == 3) {
+			return "entregas/form";
+		}else {
+			return "acesso negado";
+		}
+		
 	}
 	
 	//Retorno "vazio" para futuras implementações
@@ -45,6 +52,7 @@ public class EntregasController {
 			if(ddao.getTipoByEmail(email) == 3) {
 				Calendar cal = Calendar.getInstance();
 				ent.setDataPedido(cal);
+				ent.setStt(1);
 				edao.PedirEntrega(ent);
 				
 				return blank();
@@ -68,7 +76,7 @@ public class EntregasController {
 		
 		String email = (String)s.getAttribute("email");
 		
-		if(email != null) {
+		if(email != null && ddao.getTipoByEmail(email) == 3) {
 			
 			if(ddao.getTipoByEmail(email) == 3 || ddao.getTipoByEmail(email) == 5) {
 				edao.CancelarEntrega(id);
@@ -92,7 +100,7 @@ public class EntregasController {
 		
 	String email = (String)s.getAttribute("email");
 		
-		if(email != null) {
+		if(email != null && ddao.getTipoByEmail(email) == 3) {
 			
 			if(ddao.getTipoByEmail(email) == 3) {
 				
@@ -117,7 +125,7 @@ public class EntregasController {
 		
 	String email = (String)s.getAttribute("email");
 		
-		if(email != null) {
+		if(email != null && ddao.getTipoByEmail(email) == 5) {
 			
 			if(ddao.getTipoByEmail(email) == 5) {
 				
@@ -132,18 +140,25 @@ public class EntregasController {
 			}
 			
 		}else {
-			System.out.println("Sem login");
+			System.out.println("Sem login ou sem acesso");
 			return blank();
 		}
 	}
 
 	@RequestMapping(value="entregas/lista", method=RequestMethod.GET)
-	public ModelAndView lista() {
+	public ModelAndView lista(HttpSession s) {
 		
+		String email = (String) s.getAttribute("email");
 		ModelAndView mav = new ModelAndView();
-		List<Entregas> lista = edao.getEnt();
-		mav.addObject("lista", lista);
-		mav.setViewName("entregas/lista");
+		
+		if(ddao.getTipoByEmail(email) == 3) {
+			List<Entregas> lista = edao.getEnt();
+			mav.addObject("lista", lista);
+			mav.setViewName("entregas/lista");
+			mav.setViewName("");
+		}else {
+			mav.setViewName("");
+		}
 		
 		return mav;
 	}

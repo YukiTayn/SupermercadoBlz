@@ -8,25 +8,29 @@
 </head>
 <body>
 
-	<form action="/smercado/produtos/novo" method="post">
+	<form action="/smercado/dados/cadastro" method="post">
 		<div>
 			<label>Nome: </label> <input type="text" name="nome" />
 		</div>
 		<div>
-			<label>Tipo: </label> <input type="text" name="tipo" />
+			<label>CPF: </label> <input type="text" name="cpf" />
 		</div>
 		<div>
-			<label>Quantidade: </label> <input type="text" name="quantidade" />
+			<label>Email: </label> <input type="text" name="email" />
 		</div>
 		<div>
-			<label>Preço: </label> <input type="text" name="preco" />
+			<label>Senha: </label> <input type="password" name="senha" />
 		</div>
 		<div>
-			<label>Data de Validade: </label> <input type="text"
-				name="dataValidade" />
+			<label>Telefone: </label> <input type="text" name="telefone" />
+		</div>
+		<div>
+			<label>Data de Nascimento: </label> <input type="text"
+				name="dataNascimento" />
 		</div>
 		<div>
 			<button type="submit">Adicionar</button>
+			<input type=hidden name="tipo" value=1>
 		</div>
 	</form>
 

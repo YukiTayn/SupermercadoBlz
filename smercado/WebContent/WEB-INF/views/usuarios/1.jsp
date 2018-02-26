@@ -71,14 +71,14 @@ body {
 				<th>Data</th>
 			</tr>
 
-			<c:forEach var="vendas" items="${vendas}">
+			<c:forEach var="compras" items="${compras}">
 				<tr>
-					<td>${vendas.id}</td>
-					<td>${vendas.vendTXT}</td>
-					<td>${vendas.prodTXT}</td>
-					<td>${vendas.qtd}</td>
-					<td>${vendas.valor}</td>
-					<td><fmt:formatDate value="${vendas.dataVenda.time}"
+					<td>${compras.id}</td>
+					<td>${compras.vendTXT}</td>
+					<td>${compras.prodTXT}</td>
+					<td>${compras.qtd}</td>
+					<td>${compras.valor}</td>
+					<td><fmt:formatDate value="${compras.dataVenda.time}"
 							pattern="dd/MM/yyyy" /></td>
 				</tr>
 			</c:forEach>
@@ -87,14 +87,23 @@ body {
 
 	<div id="ComprasO" class="tabcontent">
 		<table border="1">
-			<c:forEach var="online" items="${online}">
+
+			<tr>
+				<th>ID</th>
+				<th>Vendedor</th>
+				<th>Produto</th>
+				<th>Quantidade</th>
+				<th>Valor</th>
+				<th>Data</th>
+			</tr>
+			<c:forEach var="comprasOn" items="${comprasOn}">
 				<tr>
-					<td>${online.id}</td>
+					<td>${comprasOn.id}</td>
 					<td>#Online#</td>
-					<td>${online.prodTXT}</td>
-					<td>${online.qtd}</td>
-					<td>${online.valor}</td>
-					<td><fmt:formatDate value="${online.dataVenda.time}"
+					<td>${comprasOn.prodTXT}</td>
+					<td>${comprasOn.qtd}</td>
+					<td>${comprasOn.valor}</td>
+					<td><fmt:formatDate value="${comprasOn.dataVenda.time}"
 							pattern="dd/MM/yyyy" /></td>
 				</tr>
 			</c:forEach>

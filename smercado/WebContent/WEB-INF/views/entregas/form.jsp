@@ -8,22 +8,15 @@
 </head>
 <body>
 
-	<form action="/smercado/produtos/novo" method="post">
+	<form action="/smercado/entregas/nova" method="post">
 		<div>
-			<label>Nome: </label> <input type="text" name="nome" />
+			<label>Entregador: </label> <input type="text" name="entregador" />
 		</div>
 		<div>
-			<label>Tipo: </label> <input type="text" name="tipo" />
+			<label>Produto: </label> <input type="text" name="produto" />
 		</div>
 		<div>
-			<label>Quantidade: </label> <input type="text" name="quantidade" />
-		</div>
-		<div>
-			<label>Preço: </label> <input type="text" name="preco" />
-		</div>
-		<div>
-			<label>Data de Validade: </label> <input type="text"
-				name="dataValidade" />
+			<label>Quantidade: </label> <input type="text" name="qtd" />
 		</div>
 		<div>
 			<button type="submit">Adicionar</button>

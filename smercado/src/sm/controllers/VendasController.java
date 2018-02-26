@@ -2,11 +2,14 @@ package sm.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import sm.daos.DadosDAO;
 import sm.daos.ProdutoDAO;
 import sm.daos.VendasDAO;
 import sm.models.Produto;
@@ -17,18 +20,25 @@ public class VendasController {
 
 	ProdutoDAO pdao = new ProdutoDAO();
 	VendasDAO vdao = new VendasDAO();
-	Produto p = new Produto();
-	Vendas v = new Vendas();
+	DadosDAO ddao = new DadosDAO();
+
 	
 	@RequestMapping("vendas/")
-	public ModelAndView listar() {
+	public ModelAndView listar(HttpSession s) {
 		
-		List<Vendas> vendas = vdao.getVendas();
+		String email = (String) s.getAttribute("email");
+		ModelAndView mav = new ModelAndView();
 		
-		ModelAndView modelAndView = new ModelAndView("vendas/lista");
-		modelAndView.addObject("vendas", vendas);
+		if(email != null && ddao.getTipoByEmail(email) == 3) {
+			List<Vendas> vendas = vdao.getVendas();
+			mav.setViewName("vendas/lista");
+			mav.addObject("vendas", vendas);
+		}else {
+			mav.setViewName("acesso negado");
+		}
 		
-		return modelAndView;
+		
+		return mav;
 	}
 	
 	
@@ -36,7 +46,7 @@ public class VendasController {
 	@RequestMapping(value="vendas/online", method=RequestMethod.GET)
 	public ModelAndView online(long id) {
 		
-		p = pdao.getProdutoByID(id);
+		Produto p = pdao.getProdutoByID(id);
 		ModelAndView modelAndView = new ModelAndView("vendas/online");
 		modelAndView.addObject("prod", p);
 		
@@ -44,27 +54,28 @@ public class VendasController {
 	}
 	
 	@RequestMapping(value="vendas/online", method=RequestMethod.POST)
-	public ModelAndView online(Vendas vnd) {
+	public String online(Vendas vnd) {
 		
 		vdao.newVenda(vnd);
-		return listar();
+		return "redirect:/";
 	}
 	
 	//Venda física
 	@RequestMapping(value="vendas/fisica", method=RequestMethod.GET)
 	public ModelAndView fisica(long id) {
 		
-		p = pdao.getProdutoByID(id);
-		ModelAndView modelAndView = new ModelAndView("vendas/fisica");
-		modelAndView.addObject("prod", p);
+		Produto p = pdao.getProdutoByID(id);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("vendas/fisica");
+		mav.addObject("prod", p);
 		
-		return modelAndView;
+		return mav;
 	}
 	
-	public ModelAndView fisica(Vendas vnd) {
+	public String fisica(Vendas vnd) {
 		
 		vdao.newVenda(vnd);
-		return listar();
+		return "redirect:/";
 	}
 	
 }

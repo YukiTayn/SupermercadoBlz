@@ -9,30 +9,30 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<h1>Lista de Produtos</h1>
-
 	<table border="1">
 		<tr>
-			<th>Nome</th>
-			<th>Tipo</th>
+			<th>ID</th>
+			<th>Usuário</th>
+			<th>Vendedor</th>
+			<th>Produto</th>
 			<th>Quantidade</th>
-			<th>Preço</th>
-			<th>Ação</th>
-			<th>"Comprar"</th>
+			<th>Valor</th>
+			<th>Data da Venda</th>
 		</tr>
 
-		<c:forEach var="prod" items="${prod}">
+		<c:forEach var="vendas" items="${vendas}">
 			<tr>
-				<td>${prod.nome}</td>
-				<td>${prod.tipo}</td>
-				<td>${prod.quantidade}</td>
-				<td>${prod.preco}</td>
-				<td><a href="/smercado/produtos/remover?id=${prod.id}">Remover</a></td>
-				<td><a href="/smercado/carrinho?id=${prod.id}">Comprar</a></td>
+				<td>${vendas.id}</td>
+				<td>${vendas.userTXT}</td>
+				<td>${vendas.vendTXT}</td>
+				<td>${vendas.prodTXT}</td>
+				<td>${vendas.qtd}</td>
+				<td>RS ${vendas.valor}</td>
+				<td><fmt:formatDate value="${vendas.dataVenda.time}"
+						pattern="dd/MM/yyyy" /></td>
+
 			</tr>
 		</c:forEach>
 	</table>
-
 </body>
 </html>

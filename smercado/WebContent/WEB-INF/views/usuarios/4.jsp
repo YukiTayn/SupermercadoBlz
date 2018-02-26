@@ -86,7 +86,8 @@ body {
 	</div>
 
 
-
+<a href="/smercado/dados/alterar?id=<%= session.getAttribute("id")%>">Alterar</a><br>
+<a href="/smercado/dados/apagar">Apagar</a>
 
 
 
