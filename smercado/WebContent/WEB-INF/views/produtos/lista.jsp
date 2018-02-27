@@ -29,7 +29,7 @@
 				<td>${prod.quantidade}</td>
 				<td>${prod.preco}</td>
 				<td><a href="/smercado/produtos/remover?id=${prod.id}">Remover</a></td>
-				<td><a href="/smercado/carrinho?id=${prod.id}">Comprar</a></td>
+				<td><a href="/smercado/add?id=${prod.id}">Comprar</a></td>
 			</tr>
 		</c:forEach>
 	</table>

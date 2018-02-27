@@ -12,13 +12,22 @@ public class Dados {
 
 	private long id;
 	private String nome;
-	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Calendar dataNascimento;
 	private String cpf;
 	private String email;
 	private String senha;
 	private String telefone;
 	private int tipo;
+	private String tipotxt;
+
+	public String getTipotxt() {
+		return tipotxt;
+	}
+
+	public void setTipotxt(String tipotxt) {
+		this.tipotxt = tipotxt;
+	}
 
 	public String getSenha() {
 		return senha;

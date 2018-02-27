@@ -105,14 +105,18 @@ body {
 					<td><fmt:formatDate value="${produtos.dataValidade.time}"
 							pattern="dd/MM/yyyy" /></td>
 					<td>${produtos.preco}</td>
-					<td><a href="v?act=Vendedor&id=${produtos.id}">Aqui</a></td>
+					<td><a href="/smercado/addf?id=${produtos.id}">Comprar</a></td>
 				</tr>
 			</c:forEach>
 		</table>
 		<br><br>
 		<h3>Pesquisa: </h3><br>
 		<form action="/smercado/produtos/pesquisa" method="POST">
-			Nome: <input type=text name=nome>
+			
+			
+			<label>Nome</label>
+			
+			<input type=text name=nome>
 			<button type=submit>Pesquisar</button>
 		</form>
 	</div>

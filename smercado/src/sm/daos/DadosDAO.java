@@ -274,7 +274,7 @@ public class DadosDAO {
 	//Inserir
 	public boolean novo(Dados d) {
 		
-		String sql = "insert into dados(nome, dataNascimento, cpf, email, telefone, senha) value(?,?,?,?,?,?);";
+		String sql = "insert into dados(nome, dataNascimento, cpf, email, telefone, senha, tipo) value(?,?,?,?,?,?,?);";
 		
 		try {
 			
@@ -285,6 +285,7 @@ public class DadosDAO {
 			stmt.setString(4, d.getEmail());
 			stmt.setString(5, d.getTelefone());
 			stmt.setString(6, d.getSenha());
+			stmt.setInt(7, d.getTipo());
 			
 			stmt.execute();
 			stmt.close();
@@ -312,6 +313,7 @@ public class DadosDAO {
 				d.setNome(rs.getString("nome"));
 				d.setEmail(rs.getString("email"));
 				d.setSenha(rs.getString("senha"));
+				d.setTipo(rs.getInt("tipo"));
 				
 				result.add(d);
 			}
@@ -320,6 +322,30 @@ public class DadosDAO {
 			
 			rs.close();
 			stmt.close();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		
+		return result;
+	}
+	
+	public List<Dados> getEntregadores(){
+		List<Dados> result = new ArrayList<>();
+		
+		try {
+			
+			PreparedStatement stmt = this.connection.prepareStatement("select * from dados where tipo = 5");
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				Dados d = new Dados();
+				d.setNome(rs.getString("nome"));
+				d.setId(rs.getLong("id"));
+				
+				result.add(d);
+			}
 			
 		}catch (Exception e) {
 			e.printStackTrace();

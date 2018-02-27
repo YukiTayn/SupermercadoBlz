@@ -56,7 +56,9 @@ body {
 	<div class="tab">
 		<button class="tablinks" onclick="abrirAba(event, 'Vendas')">Vendas
 			totais</button>
+		<button class="tablinks" onclick="abrirAba(event, 'Cadastro')">Cadastro</button>
 	</div>
+
 
 	<div id="Vendas" class="tabcontent">
 
@@ -85,9 +87,47 @@ body {
 
 	</div>
 
+	<div id="Cadastro" class="tabcontent">
 
-<a href="/smercado/dados/alterar?id=<%= session.getAttribute("id")%>">Alterar</a><br>
-<a href="/smercado/dados/apagar">Apagar</a>
+		<form action="/smercado/dados/cadastro" method="post">
+
+
+			<div>
+				<label>Nome: </label> <input type="text" name="nome" />
+			</div>
+			<div>
+				<label>CPF: </label> <input type="text" name="cpf" />
+			</div>
+			<div>
+				<label>Email: </label> <input type="text" name="email" />
+			</div>
+			<div>
+				<label>Senha: </label> <input type="password" name="senha" />
+			</div>
+			<div>
+				<label>Telefone: </label> <input type="text" name="telefone" />
+			</div>
+			<div>
+				<label>Data de Nascimento: </label> <input type="text"
+					name="dataNascimento" />
+			</div>
+			<div>
+				<label> Cargo: </label> <select name="tipo">
+					<option value="3">Gerente</option>
+					<option value="4">Administrador</option>
+				</select>
+			</div>
+			<div>
+				<button type="submit">Adicionar</button>
+			</div>
+		</form>
+
+	</div>
+
+
+	<a href="/smercado/dados/alterar?id=<%=session.getAttribute("id")%>">Alterar</a>
+	<br>
+	<a href="/smercado/dados/apagar">Apagar</a>
 
 
 

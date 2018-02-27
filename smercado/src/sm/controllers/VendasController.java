@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,7 +25,7 @@ public class VendasController {
 	DadosDAO ddao = new DadosDAO();
 
 	
-	@RequestMapping("vendas/")
+	@GetMapping("vendas/")
 	public ModelAndView listar(HttpSession s) {
 		
 		String email = (String) s.getAttribute("email");
@@ -34,7 +36,7 @@ public class VendasController {
 			mav.setViewName("vendas/lista");
 			mav.addObject("vendas", vendas);
 		}else {
-			mav.setViewName("acesso negado");
+			mav.setViewName("redirect:bkp/acessoNegado");
 		}
 		
 		
@@ -43,7 +45,7 @@ public class VendasController {
 	
 	
 	//Venda online
-	@RequestMapping(value="vendas/online", method=RequestMethod.GET)
+	@GetMapping(value="vendas/online")
 	public ModelAndView online(long id) {
 		
 		Produto p = pdao.getProdutoByID(id);
@@ -53,7 +55,7 @@ public class VendasController {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value="vendas/online", method=RequestMethod.POST)
+	@PostMapping(value="vendas/online")
 	public String online(Vendas vnd) {
 		
 		vdao.newVenda(vnd);
@@ -61,7 +63,7 @@ public class VendasController {
 	}
 	
 	//Venda física
-	@RequestMapping(value="vendas/fisica", method=RequestMethod.GET)
+	@GetMapping(value="vendas/fisica")
 	public ModelAndView fisica(long id) {
 		
 		Produto p = pdao.getProdutoByID(id);

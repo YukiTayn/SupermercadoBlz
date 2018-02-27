@@ -2,10 +2,12 @@ package sm.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,6 +31,28 @@ public class DadosController {
 
 	Dados d = new Dados();
 
+	// Chamados dos forms
+	@GetMapping("dados/cadastro")
+	public String cliente() {
+
+		return "usuarios/form/form";
+	}
+
+	// Cadastros
+	@PostMapping(value = "dados/cadastro")
+	public String cliente(Dados d, HttpSession s) {
+
+		s.setAttribute("nome", d.getNome());
+		System.out.println(d.getTipo());
+
+		if (ddao.novo(d) == true) {
+			return "usuarios/form/obg";
+		} else {
+			return "bkp/error";
+		}
+
+	}
+
 	@GetMapping("painel")
 	public String painel(HttpSession s) {
 
@@ -37,9 +61,9 @@ public class DadosController {
 		if (email != null) {
 
 			int aux = ddao.getTipoByEmail(email);
-			
+
 			String retorno = "usuarios/" + aux;
-			
+
 			return retorno;
 
 		} else {
@@ -48,7 +72,7 @@ public class DadosController {
 
 	}
 
-	@RequestMapping(value = "dados/listar", method = RequestMethod.GET)
+	@GetMapping(value = "dados/listar")
 	public ModelAndView listar(HttpSession s) {
 
 		String email = (String) s.getAttribute("email");
@@ -59,25 +83,26 @@ public class DadosController {
 			mav.setViewName("dados/listar");
 			mav.addObject("dados", dados);
 		} else {
-			mav.setViewName("acesso negado");
+			mav.setViewName("bkp/acessoNegado");
 		}
 
 		return mav;
 	}
 
-	//Apagar
-	@RequestMapping(value = "dados/apagar", method = RequestMethod.GET)
+	// Apagar
+	@GetMapping(value = "dados/apagar")
 	public ModelAndView apagar() {
 
 		ModelAndView mav = new ModelAndView("dados/apagar");
 		return mav;
 	}
 
-	@RequestMapping(value = "dados/apagar", method = RequestMethod.POST)
-	public String apagar(String email, String senha) {
+	@PostMapping(value = "dados/apagar")
+	public String apagar(Dados d) {
 
-		d.setEmail(email);
-		d.setSenha(senha);
+		System.out.println(">>> Dados apagados");
+		System.out.println(d.getEmail());
+		System.out.println(d.getSenha());
 
 		if (ddao.remover(d) == true) {
 			System.out.println("Apagado com sucesso");
@@ -85,11 +110,11 @@ public class DadosController {
 			System.out.println("Erro ao apagar");
 		}
 
-		return "";
+		return "redirect:/";
 	}
 
 	// Alterar
-	@RequestMapping(value = "dados/alterar", method = RequestMethod.GET)
+	@GetMapping(value = "dados/alterar")
 	public ModelAndView alterar(long id) {
 
 		d = ddao.getByID(id);
@@ -100,7 +125,7 @@ public class DadosController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "dados/alterar", method = RequestMethod.POST)
+	@PostMapping(value = "dados/alterar")
 	public String alterar(Dados d) {
 
 		ddao.alterar(d);
@@ -109,17 +134,20 @@ public class DadosController {
 	}
 
 	// Login
-	@RequestMapping(value = "dados/login", method = RequestMethod.GET)
-	public String login() {
+	@GetMapping(value = "dados/login")
+	public String login(HttpSession s) {
+		
+		List<Dados> contas = ddao.getContas();
+		s.setAttribute("contas", contas);
+		
 		return "login/form";
 	}
 
-	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public ModelAndView login(Dados d, HttpSession s) {
+	@PostMapping(value = "login")
+	public String login(Dados d, HttpSession s) {
 
 		if (ddao.existe(d.getEmail()) == 1) {
-			
-			
+
 			if (ddao.login(d) == 1) {
 
 				s.setAttribute("email", d.getEmail());
@@ -128,19 +156,19 @@ public class DadosController {
 				s.setAttribute("id", ddao.getID(d.getEmail()));
 
 				if (tipo == 1) {
-					return loginCliente(d.getEmail());
+					return loginCliente(d.getEmail(), s);
 				}
 				if (tipo == 2) {
-					return loginVend(d.getEmail());
+					return loginVend(d.getEmail(), s);
 				}
 				if (tipo == 3) {
-					return loginGerente(d.getEmail());
+					return loginGerente(d.getEmail(), s);
 				}
 				if (tipo == 4) {
-					return loginAdmin(d.getEmail());
+					return loginAdmin(d.getEmail(), s);
 				}
 				if (tipo == 5) {
-					return loginEntreg(d.getEmail());
+					return loginEntreg(d.getEmail(), s);
 				}
 
 			} else {
@@ -157,69 +185,85 @@ public class DadosController {
 
 	}
 
-	public ModelAndView loginCliente(String email) {
+	public String loginCliente(String email, HttpSession s) {
 
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("usuarios/1");
+		// ModelAndView mav = new ModelAndView();
+		// mav.setViewName("usuarios/1");
 
 		long id = ddao.getID(email);
 
 		List<Vendas> compras = vdao.getVendasByID(id);
 		List<Vendas> comprasOn = vdao.getVendasOnline(id);
-		mav.addObject("compras", compras);
-		mav.addObject("comprasOn", comprasOn);
 
-		return mav;
+		s.setAttribute("compras", compras);
+		s.setAttribute("comprasOn", comprasOn);
+
+		return "redirect:/";
 
 	}
 
-	public ModelAndView loginVend(String email) {
+	public String loginVend(String email, HttpSession s) {
 
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("usuarios/2");
+		// ModelAndView mav = new ModelAndView();
+		// mav.setViewName("usuarios/2");
 
 		long id = ddao.getID(email);
+		
+		s.setAttribute("vendedor", email);
 
 		List<Vendas> vendas = vdao.getVendasVend(id);
 		List<Produto> produtos = pdao.getProdutos();
-		mav.addObject("vendas", vendas);
-		mav.addObject("produtos", produtos);
+		s.setAttribute("vendas", vendas);
+		s.setAttribute("produtos", produtos);
+		
+		//Painel - Fazer pedido
+		List<Dados> ent = ddao.getEntregadores();
+		s.setAttribute("ent", ent);
 
-		return mav;
+		return "redirect:/";
 	}
 
-	public ModelAndView loginGerente(String email) {
+	public String loginGerente(String email, HttpSession s) {
 
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("usuarios/3");
+		// ModelAndView mav = new ModelAndView();
+		// mav.setViewName("usuarios/3");
 
 		List<Entregas> abertas = edao.Abertas();
 		List<Entregas> pegas = edao.Pegas();
 		List<Entregas> conc = edao.Concluidos();
 		List<Entregas> neg = edao.Negados();
-		mav.addObject("abertas", abertas);
-		mav.addObject("pegas", pegas);
-		mav.addObject("conc", conc);
-		mav.addObject("neg", neg);
+		List<Produto> produtos = pdao.getProdutos();
+		List<Dados> ent = ddao.getEntregadores();
+		
+		s.setAttribute("abertas", abertas);
+		s.setAttribute("pegas", pegas);
+		s.setAttribute("conc", conc);
+		s.setAttribute("neg", neg);
+		s.setAttribute("produtos", produtos);
+		s.setAttribute("ent", ent);
+		
+		for(Dados de : ent) {
+			System.out.println(de.getNome());
+		}
 
-		return mav;
+		return "redirect:/";
 	}
 
-	public ModelAndView loginAdmin(String email) {
+	public String loginAdmin(String email, HttpSession s) {
 
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("usuarios/4");
+		// ModelAndView mav = new ModelAndView();
+		// mav.setViewName("usuarios/4");
 
 		List<Vendas> vendas = vdao.getVendas();
-		mav.addObject("vendas", vendas);
-		
-		return mav;
+		s.setAttribute("vendas", vendas);
+
+		return "redirect:/";
 	}
 
-	public ModelAndView loginEntreg(String email) {
+	public String loginEntreg(String email, HttpSession s) {
 
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("usuarios/5");
+		// ModelAndView mav = new ModelAndView();
+		// mav.setViewName("usuarios/5");
 
 		long id = ddao.getID(email);
 
@@ -227,51 +271,41 @@ public class DadosController {
 		List<Entregas> pegas = edao.getEntPgID(id);
 		List<Entregas> conc = edao.getEntConcID(id);
 		List<Entregas> neg = edao.getEntNegID(id);
-		mav.addObject("abertas", abertas);
-		mav.addObject("pegas", pegas);
-		mav.addObject("conc", conc);
-		mav.addObject("neg", neg);
+		s.setAttribute("abertas", abertas);
+		s.setAttribute("pegas", pegas);
+		s.setAttribute("conc", conc);
+		s.setAttribute("neg", neg);
 
-		return mav;
+		List<Entregas> ent = edao.getEnt();
+
+		for (Entregas ex : ent) {
+			System.out.println(ex.getProduto());
+		}
+
+		return "redirect:/";
 	}
 
-	@RequestMapping("logout")
+	@GetMapping("logout")
 	public String logout(HttpSession s) {
 
 		s.invalidate();
 		return "redirect:/";
 	}
 
-	// Chamados dos forms
-	@RequestMapping("dados/cadastro")
-	public String cliente() {
-
-		return "usuarios/form/form";
-	}
-
-	public String entregador() {
-
-		return "usuarios/form/ent";
-	}
-
-	public String gerente() {
-
-		return "usuarios/form/gerente";
-	}
-
-	public String vendedor() {
-
-		return "usuarios/form/vendedor";
-	}
-
-	// Cadastros
-	@RequestMapping(value = "dados/cadastro", method = RequestMethod.POST)
-	public String cliente(Dados d) {
-
-		ddao.novo(d);
-
-		return "redirect:listar";
-	}
+	// public String entregador() {
+	//
+	// return "usuarios/form/ent";
+	// }
+	//
+	// public String gerente() {
+	//
+	// return "usuarios/form/gerente";
+	// }
+	//
+	// public String vendedor() {
+	//
+	// return "usuarios/form/vendedor";
+	// }
 
 	// @RequestMapping(value="dados/ent", method=RequestMethod.POST)
 	// public ModelAndView entregador(Dados d) {

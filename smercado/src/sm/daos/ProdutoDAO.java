@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import sm.models.Carrinho;
 import sm.models.Produto;
 
 public class ProdutoDAO {
@@ -22,6 +23,35 @@ public class ProdutoDAO {
 
 		try {
 			PreparedStatement stmt = this.connection.prepareStatement("select * from produto;");
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Produto p = new Produto();
+				p.setId(rs.getLong("id"));
+				p.setNome(rs.getString("nome"));
+				p.setTipo(rs.getString("tipo"));
+				p.setQuantidade(rs.getLong("quantidade"));
+				p.setPreco(rs.getFloat("preco"));
+
+				Calendar data = Calendar.getInstance();
+				data.setTime(rs.getDate("dataValidade"));
+				p.setDataValidade(data);
+
+				result.add(p);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+
+		return result;
+	}
+	
+	public List<Produto> getProdutosValidos() {
+		List<Produto> result = new ArrayList<>();
+
+		try {
+			PreparedStatement stmt = this.connection.prepareStatement("select * from produto where quantidade > 0;");
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -100,12 +130,12 @@ public class ProdutoDAO {
 		return result;
 	}
 	
-	public List<Produto> prodByName(String nome){
+	public List<Produto> prodByName(String proc){
 		List<Produto> result = new ArrayList<>();
 		
 		try {
 			PreparedStatement stmt = this.connection.prepareStatement("select * from produto where nome like ?");
-			stmt.setString(1, '%' + nome + '%');
+			stmt.setString(1, '%' + proc + '%');
 			ResultSet rs = stmt.executeQuery();
 			
 			while(rs.next()) {
@@ -171,6 +201,54 @@ public class ProdutoDAO {
 		}catch (Exception e) {
 			e.printStackTrace();
 			return false;
+			// TODO: handle exception
+		}
+		
+		return true;
+	}
+	
+	public long getQtd(long id) {
+		
+		long aux = 0;
+		
+		try {
+			PreparedStatement stmt = this.connection.prepareStatement("select quantidade from produto where id = ?;");
+			stmt.setLong(1, id);
+			ResultSet rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				aux = rs.getLong("quantidade");
+			}
+			
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		
+		return aux;
+	}
+	
+	public boolean attCompra(long qtd, long compra, long id) {
+		
+		CarrinhoDAO dao = new CarrinhoDAO();
+		
+		long aux = qtd - compra;
+		
+		try {
+			
+			PreparedStatement stmt = this.connection.prepareStatement("update produto set quantidade = ? where id = ?;");
+			stmt.setLong(1, aux);
+			stmt.setLong(2, id);
+			
+			stmt.execute();
+			stmt.close();
+			
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		
 			// TODO: handle exception
 		}
 		

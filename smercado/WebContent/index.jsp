@@ -7,7 +7,7 @@
 </head>
 
 <body>
-	Hey
+	Hey, <%= session.getAttribute("email") %>
 
 	<ol>
 		<li><a href="dados/login">Login</a></li>
@@ -19,7 +19,7 @@
 	<dl>			
 		<dt>Dados</dt>
 			<dd><a href="dados/listar">Lista de dados</a></dd>
-			<dd><a href="dados/cadastro">Cliente</a></dd>
+			<dd><a href="dados/cadastro">Cadastro de cliente</a></dd>
 		<dt>Entregas</dt>
 			<dd><a href="entregas/lista">Lista de entregas</a></dd>
 			<dd><a href="entregas/nova">Nova entrega</a></dd>
@@ -29,6 +29,7 @@
 			<dd><a href="#">:Pesquisa de produtos:</a></dd>
 		<dt>Vendas</dt>
 			<dd><a href="vendas/">Lista de vendas</a></dd>
+			<dd><a href="vendaF">Adicionar venda</a></dd>
 	</dl>
 
 </body>

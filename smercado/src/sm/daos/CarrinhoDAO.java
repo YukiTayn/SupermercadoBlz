@@ -28,6 +28,7 @@ public class CarrinhoDAO {
 				result.setProduto(rs.getString("nome"));
 				result.setPreco(rs.getFloat("preco"));
 				result.setQuantidade(rs.getLong("quantidade"));
+				//result.setTotal(result.getQuantidade(), result.getPreco());
 			}
 			
 			rs.close();

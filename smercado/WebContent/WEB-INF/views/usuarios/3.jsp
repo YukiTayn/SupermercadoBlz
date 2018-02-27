@@ -64,6 +64,7 @@ body {
 			negados</button>
 		<button class="tablinks" onclick="abrirAba(event, 'Fazer')">Fazer
 			pedido</button>
+		<button class="tablinks" onclick="abrirAba(event, 'Cadastro')">Cadastro</button>
 	</div>
 
 	<div id="PedidosA" class="tabcontent">
@@ -176,15 +177,64 @@ body {
 
 	<div id="Fazer" class="tabcontent">
 
-		<form action="e" method="post">
+		<form action="/smercado/entregas/nova" method="post">
 			<div>
-				<label>Gerente: </label><input type="text" name="gerente"> <br>
-				<label>Entregador:</label><input type="text" name="ent"><br>
-				<label>Produto: </label><input type="text" name="prod"> <br>
-				<label>Quantidade:</label><input type="text" name="qtd"> <br>
+				<label>Entregador:</label> <select name="entregador">
+					<c:forEach var="ent" items="${ent}">
+						<option value="${ent.id}">${ent.nome}</option>
+					</c:forEach>
+				</select>
+			</div>
+			<div>
+				<label>Produto: </label> <select name="produto">
+					<c:forEach var="produtos" items="${produtos}">
+						<option value="${produtos.id}">${produtos.nome}</option>
+					</c:forEach>
+				</select>
+			</div>
+			<div>
+				<label>Quantidade:</label><input type="number" name="qtd"> <br>
 			</div>
 			<div>
 				<button type="submit">Nova</button>
+			</div>
+		</form>
+
+	</div>
+
+	<div id="Cadastro" class="tabcontent">
+
+		<form action="/smercado/dados/cadastro" method="post">
+
+
+			<div>
+				<label>Nome: </label> <input type="text" name="nome" />
+			</div>
+			<div>
+				<label>CPF: </label> <input type="text" name="cpf" />
+			</div>
+			<div>
+				<label>Email: </label> <input type="text" name="email" />
+			</div>
+			<div>
+				<label>Senha: </label> <input type="password" name="senha" />
+			</div>
+			<div>
+				<label>Telefone: </label> <input type="text" name="telefone" />
+			</div>
+			<div>
+				<label>Data de Nascimento: </label> <input type="text"
+					name="dataNascimento" />
+			</div>
+			<div>
+				<label> Cargo: </label>
+				<select name="tipo">
+					<option value="2">Vendedor</option>
+					<option value="5">Entregador</option>
+				</select>
+			</div>
+			<div>
+				<button type="submit">Adicionar</button>
 			</div>
 		</form>
 

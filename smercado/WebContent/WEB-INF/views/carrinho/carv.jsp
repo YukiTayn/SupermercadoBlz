@@ -24,34 +24,6 @@ button {
 <body>
 	<h1>Carrinho</h1>
 
-	<!-- 	<form name='carrinho' action="/smercado/concluir" method="post">
-		<table border=1>
-			<tr>
-				<th>Índice</th>
-				<th>Produto</th>
-				<th>Quantidade</th>
-				<th>Preço</th>
-				<th>Retirar</th>
-			</tr>
-
-
-			<c:forEach var="lista" items="${carrinho}">
-				<tr>
-					<td>${lista.indice}</td>
-					<td>${lista.produto}</td>
-					<td>${lista.quantidade}</td> 
-					<td><input type="number" name="qCompra"></td>
-					<td>${lista.preco}</td>
-					<td><a href="retirar?indice=${lista.indice}">Aqui</a></td>
-				</tr>
-			</c:forEach>
-		</table>
-		<br>
-		<input type=hidden name=preco value="${lista.preco}"> 
-		<button type="submit">Comprar</button>
-
-	</form> -->
-
 	<table border=1>
 		<tr>
 			<th>Índice</th>
@@ -75,12 +47,10 @@ button {
 
 	<br>
 	<br>
-	<a href="/smercado/concluir">Concluir compra</a>
+	<a href="/smercado/produtosv">Adicionar mais produtos</a>
 	<br>
-	<a href="/smercado/produtos">Comprar mais</a>
+	<a href="/smercado/concluirv">Concluir venda</a>
 	<br>
-	<a href="cancelar">Cancelar TODA a compra</a>
-	<br>
-	<a href="/smercado/">Voltar ao index</a>
+	<a href="cancelar">Cancelar TODA a venda</a>
 </body>
 </html>
