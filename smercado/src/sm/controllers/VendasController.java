@@ -24,60 +24,58 @@ public class VendasController {
 	VendasDAO vdao = new VendasDAO();
 	DadosDAO ddao = new DadosDAO();
 
-	
 	@GetMapping("vendas/")
 	public ModelAndView listar(HttpSession s) {
-		
+
 		String email = (String) s.getAttribute("email");
 		ModelAndView mav = new ModelAndView();
-		
-		if(email != null && ddao.getTipoByEmail(email) == 3) {
+
+		if (email != null && ddao.getTipoByEmail(email) == 3 || ddao.getTipoByEmail(email) == 4) {
 			List<Vendas> vendas = vdao.getVendas();
 			mav.setViewName("vendas/lista");
 			mav.addObject("vendas", vendas);
-		}else {
-			mav.setViewName("redirect:bkp/acessoNegado");
+		} else {
+			mav.setViewName("bkp/acessoNegado");
 		}
 		
-		
 		return mav;
+
 	}
-	
-	
-	//Venda online
-	@GetMapping(value="vendas/online")
+
+	// Venda online
+	@GetMapping(value = "vendas/online")
 	public ModelAndView online(long id) {
-		
+
 		Produto p = pdao.getProdutoByID(id);
 		ModelAndView modelAndView = new ModelAndView("vendas/online");
 		modelAndView.addObject("prod", p);
-		
+
 		return modelAndView;
 	}
-	
-	@PostMapping(value="vendas/online")
+
+	@PostMapping(value = "vendas/online")
 	public String online(Vendas vnd) {
-		
+
 		vdao.newVenda(vnd);
 		return "redirect:/";
 	}
-	
-	//Venda física
-	@GetMapping(value="vendas/fisica")
+
+	// Venda física
+	@GetMapping(value = "vendas/fisica")
 	public ModelAndView fisica(long id) {
-		
+
 		Produto p = pdao.getProdutoByID(id);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("vendas/fisica");
 		mav.addObject("prod", p);
-		
+
 		return mav;
 	}
-	
+
 	public String fisica(Vendas vnd) {
-		
+
 		vdao.newVenda(vnd);
 		return "redirect:/";
 	}
-	
+
 }

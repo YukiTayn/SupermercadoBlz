@@ -42,8 +42,12 @@ public class DadosController {
 	@PostMapping(value = "dados/cadastro")
 	public String cliente(Dados d, HttpSession s) {
 
-		s.setAttribute("nome", d.getNome());
+		s.setAttribute("nomeC", d.getNome());
 		System.out.println(d.getTipo());
+		
+		if(d.getTipo() == 0) {
+			d.setTipo(1);
+		}
 
 		if (ddao.novo(d) == true) {
 			return "usuarios/form/obg";
@@ -79,9 +83,13 @@ public class DadosController {
 		ModelAndView mav = new ModelAndView();
 
 		if (email != null && ddao.getTipoByEmail(email) == 4) {
+			
+			
 			List<Dados> dados = ddao.getLista();
 			mav.setViewName("dados/listar");
 			mav.addObject("dados", dados);
+			
+			
 		} else {
 			mav.setViewName("bkp/acessoNegado");
 		}
@@ -152,22 +160,36 @@ public class DadosController {
 
 				s.setAttribute("email", d.getEmail());
 				int tipo = ddao.getTipo(d.getEmail(), d.getSenha());
-
 				s.setAttribute("id", ddao.getID(d.getEmail()));
+				
+				if(tipo == 2) {
+					s.setAttribute("vendedor", d.getEmail());
+				}else {
+					s.setAttribute("cliente", d.getEmail());
+				}
+				
+				String nome = ddao.getNome(d.getEmail());
+				s.setAttribute("nome", nome);
+
 
 				if (tipo == 1) {
+					s.setAttribute("cargo", "cliente");
 					return loginCliente(d.getEmail(), s);
 				}
 				if (tipo == 2) {
+					s.setAttribute("cargo", "vendedor");
 					return loginVend(d.getEmail(), s);
 				}
 				if (tipo == 3) {
+					s.setAttribute("cargo", "gerente");
 					return loginGerente(d.getEmail(), s);
 				}
 				if (tipo == 4) {
+					s.setAttribute("cargo", "administrador");
 					return loginAdmin(d.getEmail(), s);
 				}
 				if (tipo == 5) {
+					s.setAttribute("cargo", "entregador");
 					return loginEntreg(d.getEmail(), s);
 				}
 
@@ -242,10 +264,6 @@ public class DadosController {
 		s.setAttribute("produtos", produtos);
 		s.setAttribute("ent", ent);
 		
-		for(Dados de : ent) {
-			System.out.println(de.getNome());
-		}
-
 		return "redirect:/";
 	}
 
@@ -275,12 +293,6 @@ public class DadosController {
 		s.setAttribute("pegas", pegas);
 		s.setAttribute("conc", conc);
 		s.setAttribute("neg", neg);
-
-		List<Entregas> ent = edao.getEnt();
-
-		for (Entregas ex : ent) {
-			System.out.println(ex.getProduto());
-		}
 
 		return "redirect:/";
 	}

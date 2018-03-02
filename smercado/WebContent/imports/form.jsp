@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,35 +12,38 @@
 </head>
 <body>
 
-	<header> <c:import url="../../imports/header.jsp">
-
-	</c:import> </header>
-
-	<nav> <c:import url="../../imports/menu.jsp"></c:import> </nav>
-
-
-	<form class="pure-form pure-form-aligned"
-		action="/smercado/dados/apagar" method="post">
+	<form class="pure-form pure-form-aligned">
 		<fieldset>
 			<div class="pure-control-group">
-				<label for="name">Email</label> <input name="email" type="text"
+				<label for="name">Usuário</label> <input name="example" type="text"
 					value="Nome" required> <span
 					class="pure-form-message-inline">Campo necessário</span>
 			</div>
 
 			<div class="pure-control-group">
-				<label for="password">Senha</label> <input id="password"
+				<label for="password">Password</label> <input id="password"
 					type="password" placeholder="Password">
 			</div>
 
+			<div class="pure-control-group">
+				<label for="email">Email Address</label> <input id="email"
+					type="email" placeholder="Email Address">
+			</div>
+
+			<div class="pure-control-group">
+				<label for="foo">Supercalifragilistic Label</label> <input id="foo"
+					type="text" placeholder="Enter something here...">
+			</div>
+
 			<div class="pure-controls">
+				<label for="cb" class="pure-checkbox"> <input id="cb"
+					type="checkbox"> I've read the terms and conditions
+				</label>
 
 				<button type="submit" class="pure-button pure-button-primary">Submit</button>
 			</div>
 		</fieldset>
 	</form>
-
-	<footer> <c:import url="../../imports/footer.jsp"></c:import></footer>
 
 </body>
 </html>

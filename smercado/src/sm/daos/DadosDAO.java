@@ -355,4 +355,26 @@ public class DadosDAO {
 		return result;
 	}
 	
+	public String getNome(String email) {
+		
+		String nome = null;
+		
+			try {
+				PreparedStatement stmt = this.connection.prepareStatement("select nome from dados where email = ?");
+				stmt.setString(1, email);
+				ResultSet rs = stmt.executeQuery();
+				
+				if(rs.next()) {
+					
+					nome = rs.getString("nome");
+					
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+				// TODO: handle exception
+			}
+		
+		return nome;
+	}
+	
 }

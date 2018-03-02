@@ -59,7 +59,6 @@ public class CarrinhoController {
 			carrinho = new ArrayList<Carrinho>();
 			System.out.println(">>> Novo carrinho de compras criado");
 		}
-		
 
 		carrinho.add(c);
 
@@ -91,38 +90,38 @@ public class CarrinhoController {
 	}
 
 	@GetMapping("/concluir")
-	public String concluir(Carrinho c, Produto p, HttpSession session) {
+	public ModelAndView concluir(Carrinho c, Produto p, HttpSession session) {
 
 		ArrayList<Carrinho> carrinho = (ArrayList<Carrinho>) session.getAttribute("carrinho");
 
-		int id = (int) session.getAttribute("id");
+		// int id = (int) session.getAttribute("id");
 		String vendedor = (String) session.getAttribute("vendedor");
-		long vend = ddao.getID(vendedor);
+		String cliente = (String) session.getAttribute("cliente");
 
 		for (Carrinho cd : carrinho) {
 
 			Vendas ve = new Vendas();
-			ve.setUsuario(id);
+			// ve.setUsuario(id);
 
-			if (cdao.getProdId(cd.getProduto()) != 0) {
-				ve.setProduto(cdao.getProdId(cd.getProduto()));
-			}
-			
-			if(vendedor != null) {
-				ve.setVendedor(vend);
-			}
-
+			ve.setProduto(cdao.getProdId(cd.getProduto()));
 			ve.setQtd(cd.getqCompra());
 			ve.setValor(ve.getQtd() * cd.getPreco());
+
+			if (vendedor != null) {
+
+				long vend = ddao.getID(vendedor);
+				ve.setVendedor(vend);
+				return addCliente(ve);
+
+			} else {
+				long user = ddao.getID(cliente);
+				ve.setUsuario(user);
+			}
 
 			Calendar cal = Calendar.getInstance();
 			ve.setDataVenda(cal);
 
-			if (ve.getVendedor() == 0) {
-				vdao.newVendaOnline(ve);
-			} else {
-				vdao.newVenda(ve);
-			}
+			vdao.newVendaOnline(ve);
 
 			pdao.attCompra(pdao.getQtd(ve.getProduto()), ve.getQtd(), ve.getProduto());
 
@@ -132,7 +131,9 @@ public class CarrinhoController {
 
 		session.setAttribute("carrinho", carrinho);
 
-		return "redirect:/";
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/");
+		return mav;
 	}
 
 	@GetMapping("/add")
@@ -147,170 +148,63 @@ public class CarrinhoController {
 		return mav;
 	}
 
-	
-	
-	//Física
-	@GetMapping("/newvenda")
-	public String newVenda() {
-		
-		return null;
-	}
-	
-	@GetMapping("/vcarrinho")
-	public String newCarrinho(HttpSession s, Produto p, long qCompra) {
-		
-		List<Carrinho> carrinho = (List<Carrinho>) s.getAttribute("carrinho");
-		
-		
-		if(carrinho == null) {
-			carrinho = new ArrayList<Carrinho>();
-		}
-		
-		if(p != null) {
-			
-			Carrinho c = new Carrinho();
-			c.setProduto(p.getNome());
-			
-			
-		}
-		
-		//adicionar produto
-		//set array na session
-		//volta para o carrinho jsp
-		
-		//métodos de meio de caminho
-		//se terminar, vai pra conc
-		
-		
-		return null;
-	}
-	
-	
-	
-	
-	// Compra física
-	@GetMapping("/cancelarv")
-	public String cancelarv(HttpSession session) {
-
-		ArrayList<Carrinho> carrinho = (ArrayList<Carrinho>) session.getAttribute("carrinho");
-
-		carrinho.removeAll(carrinho);
-
-		session.setAttribute("carrinho", carrinho);
-
-		return "redirect:/";
-
-	}
-
-	@PostMapping("/carrinhoF")
-	public String addF(Produto p, HttpSession session, long qCompra) {
-
-		Carrinho c = cdao.getCar(p.getId());
-		c.setqCompra(qCompra);
-		c.setTotal(c.getqCompra(), c.getPreco());
-
-		ArrayList<Carrinho> carrinho = (ArrayList<Carrinho>) session.getAttribute("carrinho");
-		
-		if (carrinho == null) {
-			carrinho = new ArrayList<Carrinho>();
-			System.out.println(">>> Novo carrinho de compras criado");
-		}
-		
-
-		carrinho.add(c);
-
-		for (int i = 0; i < carrinho.size(); i++) {
-			c.setIndice(i);
-		}
-
-		session.setAttribute("carrinho", carrinho);
-
-		return "redirect:/carv";
-	}
-
-	@PostMapping("/carv")
-	public String carv() {
-
-		return "carrinho/carv";
-	}
-
-	public String removerv(Carrinho c, HttpSession session) {
-
-		ArrayList<Carrinho> carrinho = (ArrayList<Carrinho>) session.getAttribute("carrinho");
-
-		carrinho.remove(c.getIndice());
-
-		session.setAttribute("carrinho", carrinho);
-
-		return "redirect:carv";
-
-	}
-
-	@GetMapping("/concluirv")
-	public String concFisica(Carrinho c, Produto p, HttpSession session) {
-
-		ArrayList<Carrinho> carrinho = (ArrayList<Carrinho>) session.getAttribute("carrinho");
-
-		// int id = (int) session.getAttribute("id");
-		String vendedor = (String) session.getAttribute("vendedor");
-		String comprador = (String) session.getAttribute("cliente");
-
-		long vend = ddao.getID(vendedor);
-		long comp = ddao.getID(comprador);
-
-		for (Carrinho cd : carrinho) {
-
-			Vendas ve = new Vendas();
-			ve.setUsuario(comp);
-			ve.setVendedor(vend);
-
-			if (cdao.getProdId(cd.getProduto()) != 0) {
-				ve.setProduto(cdao.getProdId(cd.getProduto()));
-			}
-
-			ve.setQtd(cd.getqCompra());
-			ve.setValor(ve.getQtd() * cd.getPreco());
-
-			Calendar cal = Calendar.getInstance();
-			ve.setDataVenda(cal);
-
-			System.out.println(ve.getUsuario());
-			System.out.println(ve.getVendedor());
-
-			// vdao.newVenda(ve);
-
-			// pdao.attCompra(pdao.getQtd(ve.getProduto()), ve.getQtd(), ve.getProduto());
-
-		}
-
-		// carrinho.removeAll(carrinho);
-		//
-		// session.setAttribute("carrinho", carrinho);
-
-		return "redirect:/";
-	}
-
-	@GetMapping("/addf")
-	public ModelAndView preF(HttpSession s, Produto p, Carrinho c) {
+	public ModelAndView addCliente(Vendas ve) {
 
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("carrinho/prev");
-
-		Produto pp = pdao.getProdutoByID(p.getId());
-		mav.addObject("produto", pp);
+		mav.addObject("vendas", ve);
+		mav.setViewName("carrinho/cliente");
 
 		return mav;
 	}
 
-	@GetMapping("/produtosv")
-	public String listav() {
+	@PostMapping("/cVendedor")
+	public ModelAndView comVendedor(Vendas ve, String eCliente, HttpSession session) {
 
-		return "produtos/listav";
-	}
+		String vendedor = (String) session.getAttribute("vendedor");
 
-	@GetMapping("/vendaF")
-	public String confirm() {
+		ArrayList<Carrinho> carrinho = (ArrayList<Carrinho>) session.getAttribute("carrinho");
+		ModelAndView mav = new ModelAndView();
+
+		for (Carrinho c : carrinho) {
+
+			Vendas v = new Vendas();
+
+			v.setVendedor(ddao.getID(vendedor));
+			v.setProduto(cdao.getProdId(c.getProduto()));
+			v.setQtd(c.getqCompra());
+			v.setValor(v.getQtd() * c.getPreco());
+			v.setUsuario(ddao.getID(eCliente));
+
+			Calendar cal = Calendar.getInstance();
+			v.setDataVenda(cal);
+
+			vdao.newVenda(v);
+
+			pdao.attCompra(pdao.getQtd(ve.getProduto()), ve.getQtd(), ve.getProduto());
+
+		}
+
+		carrinho.removeAll(carrinho);
+
+		session.setAttribute("carrinho", carrinho);
 		
-		return "carrinho/prev";
+		attVend(session);
+
+		mav.setViewName("redirect:/");
+
+		return mav;
 	}
+	
+	public void attVend(HttpSession s) {
+		
+		String vendedor = (String) s.getAttribute("vendedor");
+		long vend = ddao.getID(vendedor);
+		
+		List<Vendas> vendas = vdao.getVendasVend(vend);
+		List<Produto> produtos = pdao.getProdutos();
+		s.setAttribute("vendas", vendas);
+		s.setAttribute("produtos", produtos);
+		
+	}
+
 }

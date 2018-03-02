@@ -28,7 +28,7 @@ public class ProdutosController {
 		String email = (String) s.getAttribute("email");
 		ModelAndView mav = new ModelAndView();
 
-		if (email != null && ddao.getTipoByEmail(email) == 3) {
+		if (email != null && ddao.getTipoByEmail(email) == 3 || ddao.getTipoByEmail(email) == 4) {
 			mav.setViewName("produtos/form");
 		} else {
 			mav.setViewName("bkp/acessoNegado");
@@ -43,7 +43,7 @@ public class ProdutosController {
 
 		String email = (String) s.getAttribute("email");
 
-		if (email != null && ddao.getTipoByEmail(email) == 3) {
+		if (email != null && ddao.getTipoByEmail(email) == 3 || ddao.getTipoByEmail(email) == 4) {
 			pdao.inserir(p);
 			return "redirect:produtos";
 		} else {
@@ -61,13 +61,12 @@ public class ProdutosController {
 		if (email != null) {
 			List<Produto> prod = pdao.getProdutosValidos();
 
-			ModelAndView m = new ModelAndView("produtos/lista");
 			mav.setViewName("produtos/lista");
 			mav.addObject("prod", prod);
 		} else {
-			
+
 			mav.setViewName("login/cadastro");
-			
+
 		}
 
 		return mav;
@@ -89,7 +88,7 @@ public class ProdutosController {
 
 		String email = (String) s.getAttribute("email");
 
-		if (email != null && ddao.getTipoByEmail(email) == 3) {
+		if (email != null && ddao.getTipoByEmail(email) == 3 || ddao.getTipoByEmail(email) == 4) {
 			pdao.apagar(id);
 			return "redirect:produtos";
 		} else {

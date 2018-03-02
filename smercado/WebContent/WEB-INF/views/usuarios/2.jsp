@@ -5,6 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 <style>
@@ -52,14 +53,21 @@ body {
 </head>
 <body>
 
+	<header> <c:import url="../../imports/header.jsp">
+
+	</c:import> </header>
+
+	<nav> <c:import url="../../imports/menu.jsp"></c:import> </nav>
 
 	<div class="tab">
-		<button class="tablinks" onclick="abrirAba(event, 'Vendas')">Suas vendas</button>
-		<button class="tablinks" onclick="abrirAba(event, 'Produtos')">Lista de produtos</button>
+		<button class="tablinks" onclick="abrirAba(event, 'Vendas')">Suas
+			vendas</button>
+		<button class="tablinks" onclick="abrirAba(event, 'Produtos')">Lista
+			de produtos</button>
 	</div>
 
 	<div id="Vendas" class="tabcontent">
-		<table border="1">
+		<table class="w3-table-all w3-hoverable">
 			<tr>
 				<th>Nº</th>
 				<th>Usuário</th>
@@ -84,7 +92,7 @@ body {
 	</div>
 
 	<div id="Produtos" class="tabcontent">
-		<table border="1">
+		<table class="w3-table-all w3-hoverable">
 
 			<tr>
 				<th>Nº</th>
@@ -109,21 +117,22 @@ body {
 				</tr>
 			</c:forEach>
 		</table>
-		<br><br>
-		<h3>Pesquisa: </h3><br>
+		<br> <br>
+		<h3>Pesquisa:</h3>
+		<br>
 		<form action="/smercado/produtos/pesquisa" method="POST">
-			
-			
-			<label>Nome</label>
-			
-			<input type=text name=nome>
+
+
+			<label>Nome</label> <input type=text name=nome>
 			<button type=submit>Pesquisar</button>
 		</form>
 	</div>
 
 
 
+	<footer> <c:import url="../../imports/footer.jsp">
 
+	</c:import> </footer>
 
 	<script>
 		function abrirAba(evt, cityName) {

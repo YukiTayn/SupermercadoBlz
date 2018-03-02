@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <title>Insert title here</title>
 <style>
 body {
@@ -52,6 +53,11 @@ body {
 </head>
 <body>
 
+	<header> <c:import url="../../imports/header.jsp">
+
+	</c:import> </header>
+
+	<nav> <c:import url="../../imports/menu.jsp"></c:import> </nav>
 
 	<div class="tab">
 		<button class="tablinks" onclick="abrirAba(event, 'ComprasF')">Compras
@@ -61,7 +67,7 @@ body {
 	</div>
 
 	<div id="ComprasF" class="tabcontent">
-		<table border="1">
+		<table class="w3-table-all w3-hoverable">
 			<tr>
 				<th>ID</th>
 				<th>Vendedor</th>
@@ -86,7 +92,7 @@ body {
 	</div>
 
 	<div id="ComprasO" class="tabcontent">
-		<table border="1">
+		<table class="w3-table-all w3-hoverable">
 
 			<tr>
 				<th>ID</th>
@@ -112,7 +118,9 @@ body {
 
 	</div>
 
+	<footer> <c:import url="../../imports/footer.jsp">
 
+	</c:import> </footer>
 
 
 

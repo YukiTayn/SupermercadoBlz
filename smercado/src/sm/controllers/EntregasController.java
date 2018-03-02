@@ -14,13 +14,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import sm.daos.DadosDAO;
 import sm.daos.EntregasDAO;
+import sm.daos.ProdutoDAO;
+import sm.models.Dados;
 import sm.models.Entregas;
+import sm.models.Produto;
 
 @Controller
 public class EntregasController {
 
 	DadosDAO ddao = new DadosDAO();
 	EntregasDAO edao = new EntregasDAO();
+	ProdutoDAO pdao = new ProdutoDAO();
 	Entregas e = new Entregas();
 
 	// // Link
@@ -54,12 +58,6 @@ public class EntregasController {
 	//
 	// }
 
-	// Retorno "vazio" para futuras implementações
-	public ModelAndView blank() {
-
-		return null;
-	}
-
 	// Ações das entregas
 	@PostMapping(value = "entregas/nova")
 	public String nova(Entregas ent, HttpSession s) {
@@ -74,9 +72,36 @@ public class EntregasController {
 		ent.setDataPedido(dataP);
 		ent.setStt(stt);
 
-		edao.PedirEntrega(ent);
+		if (ddao.getTipoByEmail(email) == 3 || ddao.getTipoByEmail(email) == 4) {
 
-		return "redirect:/";
+			if (edao.PedirEntrega(ent) == true) {
+
+				List<Entregas> abertas = edao.Abertas();
+				List<Entregas> pegas = edao.Pegas();
+				List<Entregas> conc = edao.Concluidos();
+				List<Entregas> neg = edao.Negados();
+				List<Produto> produtos = pdao.getProdutos();
+				List<Dados> dados = ddao.getEntregadores();
+				// List<Dados> ent = ddao.getEntregadores();
+
+				s.setAttribute("abertas", abertas);
+				s.setAttribute("pegas", pegas);
+				s.setAttribute("conc", conc);
+				s.setAttribute("neg", neg);
+				s.setAttribute("produtos", produtos);
+				s.setAttribute("ent", dados);
+
+				return "redirect:/";
+
+			} else {
+
+				return "redirect:bkp/error";
+			}
+
+		} else {
+
+			return "redirect:bkp/acessoNegado";
+		}
 
 		// String email = (String)s.getAttribute("email");
 		//
@@ -112,7 +137,23 @@ public class EntregasController {
 
 			if (ddao.getTipoByEmail(email) == 3 || ddao.getTipoByEmail(email) == 5) {
 				edao.CancelarEntrega(id);
-				return "redirect:painel";
+
+				List<Entregas> abertas = edao.Abertas();
+				List<Entregas> pegas = edao.Pegas();
+				List<Entregas> conc = edao.Concluidos();
+				List<Entregas> neg = edao.Negados();
+				List<Produto> produtos = pdao.getProdutos();
+				List<Dados> dados = ddao.getEntregadores();
+				// List<Dados> ent = ddao.getEntregadores();
+
+				s.setAttribute("abertas", abertas);
+				s.setAttribute("pegas", pegas);
+				s.setAttribute("conc", conc);
+				s.setAttribute("neg", neg);
+				s.setAttribute("produtos", produtos);
+				s.setAttribute("ent", dados);
+
+				return "redirect:/smercado/painel";
 			} else {
 
 				System.out.println("Sem acesso");
@@ -136,7 +177,22 @@ public class EntregasController {
 
 				edao.FecharEntrega(id);
 
-				return "redirect:painel";
+				List<Entregas> abertas = edao.Abertas();
+				List<Entregas> pegas = edao.Pegas();
+				List<Entregas> conc = edao.Concluidos();
+				List<Entregas> neg = edao.Negados();
+				List<Produto> produtos = pdao.getProdutos();
+				List<Dados> dados = ddao.getEntregadores();
+				// List<Dados> ent = ddao.getEntregadores();
+
+				s.setAttribute("abertas", abertas);
+				s.setAttribute("pegas", pegas);
+				s.setAttribute("conc", conc);
+				s.setAttribute("neg", neg);
+				s.setAttribute("produtos", produtos);
+				s.setAttribute("ent", dados);
+
+				return "redirect:/";
 
 			} else {
 
@@ -161,7 +217,55 @@ public class EntregasController {
 
 				edao.PegarEntrega(id);
 
-				return "redirect:painel";
+				
+				long idd = ddao.getID(email);
+				List<Entregas> abertas = edao.getEntAbID(idd);
+				List<Entregas> pegas = edao.getEntPgID(idd);
+				List<Entregas> conc = edao.getEntConcID(idd);
+				List<Entregas> neg = edao.getEntNegID(idd);
+				s.setAttribute("abertas", abertas);
+				s.setAttribute("pegas", pegas);
+				s.setAttribute("conc", conc);
+				s.setAttribute("neg", neg);
+
+				return "redirect:/";
+
+			} else {
+
+				System.out.println("Sem acesso");
+				return "redirect:bkp/acessoNegado";
+			}
+
+		} else {
+			System.out.println("Sem login ou sem acesso");
+			return "redirect:bkp/error";
+		}
+	}
+
+	@GetMapping("entregas/negar")
+	public String negar(long id, HttpSession s) {
+
+		String email = (String) s.getAttribute("email");
+		
+
+		if (email != null && ddao.getTipoByEmail(email) == 5) {
+
+			long idd = ddao.getID(email);
+			
+			if (ddao.getTipoByEmail(email) == 5) {
+
+				edao.NegarEntrega(id);
+
+				List<Entregas> abertas = edao.getEntAbID(idd);
+				List<Entregas> pegas = edao.getEntPgID(idd);
+				List<Entregas> conc = edao.getEntConcID(idd);
+				List<Entregas> neg = edao.getEntNegID(idd);
+				s.setAttribute("abertas", abertas);
+				s.setAttribute("pegas", pegas);
+				s.setAttribute("conc", conc);
+				s.setAttribute("neg", neg);
+
+				return "redirect:/";
 
 			} else {
 

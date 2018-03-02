@@ -522,6 +522,27 @@ public class EntregasDAO {
 
 		return true;
 	}
+	
+	public boolean NegarEntrega(long id) {
+
+		try {
+
+			PreparedStatement stmt = this.connection
+					.prepareStatement("update entregas set stt = 4 where id = ?;");
+
+			stmt.setLong(1, id);
+
+			stmt.execute();
+			stmt.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+			// TODO: handle exception
+		}
+
+		return true;
+	}
 
 	public boolean PedirEntrega(Entregas ent) {
 		

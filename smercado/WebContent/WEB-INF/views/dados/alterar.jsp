@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <link rel="stylesheet"
@@ -18,42 +19,50 @@
 	</c:import> </header>
 
 	<nav> <c:import url="../../imports/menu.jsp"></c:import> </nav>
+
+
 	<form class="pure-form pure-form-aligned"
-		action="/smercado/produtos/novo" method="post">
+		action="/smercado/dados/alterar" method="post">
 		<fieldset>
 			<div class="pure-control-group">
 				<label for="name">Nome: </label> <input name="nome" type="text"
-					placeholder="Nome do produto..." required> <span
+					value="${dados.nome}" required> <span
 					class="pure-form-message-inline">Campo necessário</span>
 			</div>
 			<div class="pure-control-group">
-				<label for="name">Tipo: </label> <input name="tipo" type="text"
-					placeholder="Tipo do produto..." required> <span
-					class="pure-form-message-inline">Campo necessário</span>
+				<label for="name">Email: </label> <input name="email" type="text"
+					value="${dados.email}" required>
 			</div>
 			<div class="pure-control-group">
-				<label for="name">Quantidade: </label> <input name="quantidade"
-					type="text" placeholder="Quantidade do produto..." required>
-				<span class="pure-form-message-inline">Campo necessário</span>
+				<label for="name">Senha: </label> <input name="senha" type="text"
+					placeholdder="Coloque sua senha..." required>
 			</div>
-			<div class="pure-control-group">
-				<label for="name">Preço: </label> <input name="preco" type="text"
-					placeholder="Preço do produto... (Apenas números)" required>
-				<span class="pure-form-message-inline">Campo necessário</span>
-			</div>
-			<div class="pure-control-group">
-				<label for="name">Data de Validade: </label> <input
-					name="dataValidade" type="text"
-					placeholder="Data de validade (Formato - dd/mm/aaaa)" required>
-				<span class="pure-form-message-inline">Campo necessário</span>
-			</div>
-			<div class="pure-controls">
 
+			<div class="pure-control-group">
+				<label for="name">CPF: </label> <input name="cpf" type="text"
+					value="${dados.cpf}" required>
+			</div>
+
+			<div class="pure-control-group">
+				<label for="name">Telefone: </label> <input name="telefone"
+					type="text" value="${dados.telefone}" required>
+			</div>
+
+			<div class="pure-control-group">
+				<label for="name">Data de Nascimento: </label> <input
+					name="dataNascimento" type="text"
+					value='<fmt:formatDate value="${dados.dataNascimento.time }" pattern="dd/MM/yyyy"/>'
+					required>
+			</div>
+
+			<div class="pure-controls">
+				<input type="hidden" name="id" value="${dados.id }">
 				<button type="submit" class="pure-button pure-button-primary">Submit</button>
 			</div>
 		</fieldset>
 	</form>
 
 	<footer> <c:import url="../../imports/footer.jsp"></c:import></footer>
+
 </body>
 </html>

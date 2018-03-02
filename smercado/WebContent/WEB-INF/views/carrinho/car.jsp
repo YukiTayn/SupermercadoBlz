@@ -6,23 +6,26 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <title>Insert title here</title>
-<style type="text/css">
-button {
-	background: none !important;
-	border: none;
-	padding: 0 !important;
-	/*optional*/
-	font-family: arial, sans-serif; /*input has OS specific font-family*/
-	color: #069;
-	text-decoration: underline;
-	cursor: pointer;
+
+<style>
+a:link, a:visited {
+	background-color: #626262;
+	color: white;
+	padding: 1%;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+}
+
+a:hover, a:active {
+	background-color: red;
 }
 </style>
 
 </head>
 <body>
-	<h1>Carrinho</h1>
 
 	<!-- 	<form name='carrinho' action="/smercado/concluir" method="post">
 		<table border=1>
@@ -52,7 +55,12 @@ button {
 
 	</form> -->
 
-	<table border=1>
+	<header> <c:import url="../../imports/header.jsp">
+
+	</c:import> </header>
+
+	<nav> <c:import url="../../imports/menu.jsp"></c:import> </nav>
+	<table class="w3-table-all w3-hoverable">
 		<tr>
 			<th>Índice</th>
 			<th>Produto</th>
@@ -75,12 +83,10 @@ button {
 
 	<br>
 	<br>
-	<a href="/smercado/concluir">Concluir compra</a>
-	<br>
-	<a href="/smercado/produtos">Comprar mais</a>
-	<br>
-	<a href="cancelar">Cancelar TODA a compra</a>
-	<br>
-	<a href="/smercado/">Voltar ao index</a>
+	<nav> <a href="/smercado/concluir">Concluir compra</a> <a
+		href="/smercado/produtos">Comprar mais</a> <a href="cancelar">Cancelar
+		TODA a compra</a> <a href="/smercado/">Voltar ao index</a> </nav>
+
+	<footer> <c:import url="../../imports/footer.jsp"></c:import></footer>
 </body>
 </html>

@@ -6,33 +6,89 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <title>Insert title here</title>
+
+<style>
+a:link, a:visited {
+	background-color: #626262;
+	color: white;
+	padding: 4%;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+}
+
+a:hover, a:active {
+	background-color: red;
+}
+</style>
 </head>
 <body>
 
-	<h1>Lista de Produtos</h1>
 
-	<table border="1">
-		<tr>
-			<th>Nome</th>
-			<th>Tipo</th>
-			<th>Quantidade</th>
-			<th>Preço</th>
-			<th>Ação</th>
-			<th>"Comprar"</th>
-		</tr>
+	<header> <c:import url="../../imports/header.jsp">
 
-		<c:forEach var="prod" items="${prod}">
+	</c:import> </header>
+
+	<nav> <c:import url="../../imports/menu.jsp"></c:import> </nav>
+	
+	<div class="w3-container">
+		<h2>Lista de produtos</h2>
+
+		<table class="w3-table-all w3-hoverable">
 			<tr>
-				<td>${prod.nome}</td>
-				<td>${prod.tipo}</td>
-				<td>${prod.quantidade}</td>
-				<td>${prod.preco}</td>
-				<td><a href="/smercado/produtos/remover?id=${prod.id}">Remover</a></td>
-				<td><a href="/smercado/add?id=${prod.id}">Comprar</a></td>
-			</tr>
-		</c:forEach>
-	</table>
+				<th>Nome</th>
+				<th>Tipo</th>
+				<th>Quantidade</th>
+				<th>Preço</th>
+				<c:if test="${cargo == 'gerente'}">
+					<th>Ação</th>
+				</c:if>
 
+				<c:if test="${cargo == 'administrador'}">
+					<th>Ação</th>
+				</c:if>
+
+				<c:choose>
+					<c:when test="${cargo == 'vendedor'}">
+						<th>Vender</th>
+					</c:when>
+					<c:when test="${cargo != 'vendedor'}">
+						<th>Comprar</th>
+					</c:when>
+				</c:choose>
+			</tr>
+
+			<c:forEach var="prod" items="${prod}">
+				<tr>
+					<td>${prod.nome}</td>
+					<td>${prod.tipo}</td>
+					<td>${prod.quantidade}</td>
+					<td>${prod.preco}</td>
+					<c:if test="${cargo == 'gerente'}">
+						<td><a href="/smercado/produtos/remover?id=${prod.id}">Remover</a></td>
+					</c:if>
+					<c:if test="${cargo == 'administrador'}">
+						<td><a href="/smercado/produtos/remover?id=${prod.id}">Remover</a></td>
+					</c:if>
+					<c:choose>
+						<c:when test="${cargo == 'vendedor'}">
+							<td><a href="/smercado/add?id=${prod.id}">Vender</a></td>
+						</c:when>
+						<c:otherwise>
+							<td><a href="/smercado/add?id=${prod.id}">Comprar</a></td>
+						</c:otherwise>
+					</c:choose>
+
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
+
+
+	<footer> <c:import url="../../imports/footer.jsp">
+
+	</c:import> </footer>
 </body>
 </html>
