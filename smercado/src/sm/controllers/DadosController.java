@@ -44,8 +44,8 @@ public class DadosController {
 
 		s.setAttribute("nomeC", d.getNome());
 		System.out.println(d.getTipo());
-		
-		if(d.getTipo() == 0) {
+
+		if (d.getTipo() == 0) {
 			d.setTipo(1);
 		}
 
@@ -83,13 +83,11 @@ public class DadosController {
 		ModelAndView mav = new ModelAndView();
 
 		if (email != null && ddao.getTipoByEmail(email) == 4) {
-			
-			
+
 			List<Dados> dados = ddao.getLista();
 			mav.setViewName("dados/listar");
 			mav.addObject("dados", dados);
-			
-			
+
 		} else {
 			mav.setViewName("bkp/acessoNegado");
 		}
@@ -144,15 +142,17 @@ public class DadosController {
 	// Login
 	@GetMapping(value = "dados/login")
 	public String login(HttpSession s) {
-		
+
 		List<Dados> contas = ddao.getContas();
 		s.setAttribute("contas", contas);
-		
+
 		return "login/form";
 	}
 
 	@PostMapping(value = "login")
 	public String login(Dados d, HttpSession s) {
+
+		s.removeAttribute("mensagem");
 
 		if (ddao.existe(d.getEmail()) == 1) {
 
@@ -161,16 +161,15 @@ public class DadosController {
 				s.setAttribute("email", d.getEmail());
 				int tipo = ddao.getTipo(d.getEmail(), d.getSenha());
 				s.setAttribute("id", ddao.getID(d.getEmail()));
-				
-				if(tipo == 2) {
+
+				if (tipo == 2) {
 					s.setAttribute("vendedor", d.getEmail());
-				}else {
+				} else {
 					s.setAttribute("cliente", d.getEmail());
 				}
-				
+
 				String nome = ddao.getNome(d.getEmail());
 				s.setAttribute("nome", nome);
-
 
 				if (tipo == 1) {
 					s.setAttribute("cargo", "cliente");
@@ -195,12 +194,15 @@ public class DadosController {
 
 			} else {
 				System.out.println("Erro nas entradas");
-				return null;
+
+				String me = "Erro ao tentar logar, verifique seu email e senha e tente novamente";
+				s.setAttribute("mensagem", me);
+				return login(s);
 			}
 
 		} else {
 			System.out.println("Email não existe");
-			return null;
+			return cliente();
 		}
 
 		return null;
@@ -230,15 +232,15 @@ public class DadosController {
 		// mav.setViewName("usuarios/2");
 
 		long id = ddao.getID(email);
-		
+
 		s.setAttribute("vendedor", email);
 
 		List<Vendas> vendas = vdao.getVendasVend(id);
 		List<Produto> produtos = pdao.getProdutos();
 		s.setAttribute("vendas", vendas);
 		s.setAttribute("produtos", produtos);
-		
-		//Painel - Fazer pedido
+
+		// Painel - Fazer pedido
 		List<Dados> ent = ddao.getEntregadores();
 		s.setAttribute("ent", ent);
 
@@ -256,14 +258,14 @@ public class DadosController {
 		List<Entregas> neg = edao.Negados();
 		List<Produto> produtos = pdao.getProdutos();
 		List<Dados> ent = ddao.getEntregadores();
-		
+
 		s.setAttribute("abertas", abertas);
 		s.setAttribute("pegas", pegas);
 		s.setAttribute("conc", conc);
 		s.setAttribute("neg", neg);
 		s.setAttribute("produtos", produtos);
 		s.setAttribute("ent", ent);
-		
+
 		return "redirect:/";
 	}
 

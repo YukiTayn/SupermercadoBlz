@@ -12,6 +12,14 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+
+<style>
+
+	h3{
+		padding-left: 10%;
+	}
+
+</style>
 </head>
 <body>
 
@@ -21,6 +29,14 @@
 
 	<nav> <c:import url="../../imports/menu.jsp"></c:import> </nav>
 
+
+	<br>
+	
+	<c:if test="${not empty mensagem }">
+		<h3><%= session.getAttribute("mensagem") %></h3>
+		<br>
+	</c:if>
+	
 	<form class="pure-form pure-form-aligned" action="/smercado/login"
 		method="post">
 		<fieldset>
