@@ -5,11 +5,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Cadastro</title>
 <link rel="stylesheet"
 	href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
 	integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w"
 	crossorigin="anonymous">
+
+<style>
+#t {
+	padding-left: 4%;
+}
+</style>
 
 </head>
 <body>
@@ -19,6 +25,12 @@
 
 	<nav> <c:import url="../../../imports/menu.jsp"></c:import> </nav>
 
+	<c:if test="${not empty loginLista}">
+		<div id="t">
+			<h2><%=session.getAttribute("loginLista")%></h2>
+			<br>
+		</div>
+	</c:if>
 	<form class="pure-form pure-form-aligned"
 		action="/smercado/dados/cadastro" method="post">
 		<fieldset>
@@ -61,6 +73,7 @@
 		</fieldset>
 	</form>
 
-	<footer> <c:import url="../../../imports/footer.jsp"></c:import> </footer>
+	<footer> <c:import url="../../../imports/footer.jsp"></c:import>
+	</footer>
 </body>
 </html>

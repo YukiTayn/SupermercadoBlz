@@ -5,7 +5,16 @@
 <head>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Cadastro</title>
+<style type="text/css">
+
+#t{
+
+	padding: 4%;
+
+}
+
+</style>
 </head>
 <body>
 
@@ -14,12 +23,16 @@
 	</c:import> </header>
 
 	<nav> <c:import url="../../../imports/menu.jsp"></c:import> </nav>
-	<h1>
-		Obrigado pelo cadastro,
-		<%=session.getAttribute("nomeC")%></h1>
 
-	<h3>Você será redirecionado para a pagina inicial em 5 segundos...</h3>
+	<div id="t">
+		<h1>
+			Obrigado pelo cadastro,
+			<%=session.getAttribute("nomeC")%></h1>
 
+		<h3>Você será redirecionado para a pagina inicial em 5
+			segundos...</h3>
+
+	</div>
 	<footer> <c:import url="../../../imports/footer.jsp"></c:import></footer>
 	<script>
 		window.setTimeout("location.href='/smercado/'", 5000)

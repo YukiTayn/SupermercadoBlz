@@ -7,10 +7,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<title>Insert title here</title>
+<title>Carrinho de compras</title>
 
 <style>
-a:link, a:visited {
+.a1:link, .a1:visited {
 	background-color: #626262;
 	color: white;
 	padding: 1%;
@@ -19,41 +19,13 @@ a:link, a:visited {
 	display: inline-block;
 }
 
-a:hover, a:active {
+.a1:hover, .a1:active {
 	background-color: red;
 }
 </style>
 
 </head>
 <body>
-
-	<!-- 	<form name='carrinho' action="/smercado/concluir" method="post">
-		<table border=1>
-			<tr>
-				<th>Índice</th>
-				<th>Produto</th>
-				<th>Quantidade</th>
-				<th>Preço</th>
-				<th>Retirar</th>
-			</tr>
-
-
-			<c:forEach var="lista" items="${carrinho}">
-				<tr>
-					<td>${lista.indice}</td>
-					<td>${lista.produto}</td>
-					<td>${lista.quantidade}</td> 
-					<td><input type="number" name="qCompra"></td>
-					<td>${lista.preco}</td>
-					<td><a href="retirar?indice=${lista.indice}">Aqui</a></td>
-				</tr>
-			</c:forEach>
-		</table>
-		<br>
-		<input type=hidden name=preco value="${lista.preco}"> 
-		<button type="submit">Comprar</button>
-
-	</form> -->
 
 	<header> <c:import url="../../imports/header.jsp">
 
@@ -83,9 +55,10 @@ a:hover, a:active {
 
 	<br>
 	<br>
-	<nav> <a href="/smercado/concluir">Concluir compra</a> <a
-		href="/smercado/produtos">Comprar mais</a> <a href="cancelar">Cancelar
-		TODA a compra</a> <a href="/smercado/">Voltar ao index</a> </nav>
+	<nav> <a class="a1" href="/smercado/concluir">Concluir compra</a>
+	<a class="a1" href="/smercado/produtos">Comprar mais</a> <a class="a1"
+		href="cancelar">Cancelar TODA a compra</a> <a class="a1"
+		href="/smercado/">Voltar ao index</a> </nav>
 
 	<footer> <c:import url="../../imports/footer.jsp"></c:import></footer>
 </body>

@@ -42,6 +42,22 @@ public class DadosDAO {
 				data.setTime(rs.getDate("dataNascimento"));
 				d.setDataNascimento(data);
 				
+				if(d.getTipo() == 1) {
+					d.setTipotxt("Cliente");
+				}
+				if(d.getTipo() == 2) {
+					d.setTipotxt("Vendedor");
+				}
+				if(d.getTipo() == 3) {
+					d.setTipotxt("Gerente");
+				}
+				if(d.getTipo() == 4) {
+					d.setTipotxt("Administrador");
+				}
+				if(d.getTipo() == 5) {
+					d.setTipotxt("Entregador");
+				}
+				
 				result.add(d);
 				
 			}
@@ -375,6 +391,28 @@ public class DadosDAO {
 			}
 		
 		return nome;
+	}
+	
+	public String getNomeByID(long id) {
+		
+		String rtn = "";
+		
+			try {
+				
+				PreparedStatement stmt = this.connection.prepareStatement("select nome from dados where id = ?");
+				stmt.setLong(1, id);
+				ResultSet rs = stmt.executeQuery();
+				
+				if(rs.next()) {
+					rtn = rs.getString("nome");
+				}
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+				// TODO: handle exception
+			}
+		
+		return rtn;
 	}
 	
 }

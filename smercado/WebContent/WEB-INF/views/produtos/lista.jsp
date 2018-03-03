@@ -7,21 +7,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<title>Insert title here</title>
+<title>Lista de produtos</title>
 
 <style>
-a:link, a:visited {
-	background-color: #626262;
-	color: white;
-	padding: 4%;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-}
 
-a:hover, a:active {
-	background-color: red;
-}
 </style>
 </head>
 <body>

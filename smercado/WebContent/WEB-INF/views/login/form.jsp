@@ -11,7 +11,7 @@
 <head>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Login</title>
 
 <style>
 
@@ -57,32 +57,6 @@
 			</div>
 		</fieldset>
 	</form>
-
-
-
-	<div class="w3-container">
-		<h2>Lista dos dados (apenas para demonstração :))</h2>
-
-		<table class="w3-table-all w3-hoverable">
-			<tr>
-
-				<th>Nome</th>
-				<th>Email</th>
-				<th>Senha</th>
-				<th>Tipo</th>
-
-			</tr>
-			<c:forEach var="contas" items="${contas}">
-				<tr>
-					<td>${contas.nome }</td>
-					<td>${contas.email }</td>
-					<td>${contas.senha }</td>
-					<td>${contas.tipo }</td>
-				</tr>
-			</c:forEach>
-
-		</table>
-	</div>
 
 	<footer> <c:import url="../../imports/footer.jsp"></c:import></footer>
 </body>

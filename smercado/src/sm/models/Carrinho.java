@@ -9,6 +9,7 @@ public class Carrinho {
 	private float preco;
 	private float total;
 
+
 	public long getqCompra() {
 		return qCompra;
 	}

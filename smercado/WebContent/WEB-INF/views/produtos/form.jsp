@@ -9,7 +9,7 @@
 	integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w"
 	crossorigin="anonymous">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Formulário de produto</title>
 </head>
 <body>
 
@@ -38,13 +38,13 @@
 			</div>
 			<div class="pure-control-group">
 				<label for="name">Preço: </label> <input name="preco" type="text"
-					placeholder="Preço do produto... (Apenas números)" required>
+					placeholder="(Apenas números)" required>
 				<span class="pure-form-message-inline">Campo necessário</span>
 			</div>
 			<div class="pure-control-group">
 				<label for="name">Data de Validade: </label> <input
 					name="dataValidade" type="text"
-					placeholder="Data de validade (Formato - dd/mm/aaaa)" required>
+					placeholder="Dia/Mês/Ano" required>
 				<span class="pure-form-message-inline">Campo necessário</span>
 			</div>
 			<div class="pure-controls">

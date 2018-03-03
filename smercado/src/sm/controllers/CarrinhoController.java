@@ -32,7 +32,6 @@ public class CarrinhoController {
 	ProdutoDAO pdao = new ProdutoDAO();
 	CarrinhoDAO cdao = new CarrinhoDAO();
 
-	// Compra online
 	@GetMapping("/cancelar")
 	public String cancelar(HttpSession session) {
 
@@ -94,14 +93,12 @@ public class CarrinhoController {
 
 		ArrayList<Carrinho> carrinho = (ArrayList<Carrinho>) session.getAttribute("carrinho");
 
-		// int id = (int) session.getAttribute("id");
 		String vendedor = (String) session.getAttribute("vendedor");
 		String cliente = (String) session.getAttribute("cliente");
 
 		for (Carrinho cd : carrinho) {
 
 			Vendas ve = new Vendas();
-			// ve.setUsuario(id);
 
 			ve.setProduto(cdao.getProdId(cd.getProduto()));
 			ve.setQtd(cd.getqCompra());

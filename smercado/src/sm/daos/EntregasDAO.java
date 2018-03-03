@@ -35,6 +35,9 @@ public class EntregasDAO {
 				e.setEntregador(rs.getLong("id_entregador"));
 				e.setProduto(rs.getLong("id_produto"));
 				e.setQtd(rs.getLong("qtd"));
+				e.setProdutotxt(pdao.getName(e.getProduto()));
+				e.setGerentetxt(ddao.getNomeByID(e.getGerente()));
+				e.setEnttxt(ddao.getNomeByID(e.getEntregador()));
 				
 				result.add(e);
 			}

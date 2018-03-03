@@ -8,11 +8,17 @@
 <head>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Lista de vendas</title>
 </head>
 <body>
+
+	<header> <c:import url="../../imports/header.jsp">
+
+	</c:import> </header>
+
+	<nav> <c:import url="../../imports/menu.jsp"></c:import> </nav>
 	<div class="w3-container">
-		<h2>Striped Bordered Table</h2>
+		<h2>Lista de vendas</h2>
 
 		<table class="w3-table-all w3-hoverable">
 			<tr>
@@ -40,5 +46,7 @@
 			</c:forEach>
 		</table>
 	</div>
+
+	<footer> <c:import url="../../imports/footer.jsp"></c:import></footer>
 </body>
 </html>

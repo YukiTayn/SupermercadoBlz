@@ -37,12 +37,11 @@ public class VendasController {
 		} else {
 			mav.setViewName("bkp/acessoNegado");
 		}
-		
+
 		return mav;
 
 	}
 
-	// Venda online
 	@GetMapping(value = "vendas/online")
 	public ModelAndView online(long id) {
 
@@ -60,7 +59,6 @@ public class VendasController {
 		return "redirect:/";
 	}
 
-	// Venda física
 	@GetMapping(value = "vendas/fisica")
 	public ModelAndView fisica(long id) {
 

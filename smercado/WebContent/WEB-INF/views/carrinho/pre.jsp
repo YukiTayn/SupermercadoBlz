@@ -10,7 +10,12 @@
 	crossorigin="anonymous">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Carrinho de compras</title>
+<style type="text/css">
+#t{
+	padding-left: 5%;
+}
+</style>
 </head>
 <body>
 
@@ -42,7 +47,9 @@
 			</tr>
 		</table>
 		<br>
-		<button type="submit">Adicionar ao carrinho!</button>
+		<div id="t">
+			<button type="submit">Adicionar ao carrinho!</button>
+		</div>
 	</form>
 
 	<footer> <c:import url="../../imports/footer.jsp"></c:import></footer>

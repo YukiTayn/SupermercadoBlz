@@ -12,7 +12,7 @@
 	integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w"
 	crossorigin="anonymous">
 
-<title>Insert title here</title>
+<title>Painel - Administrador</title>
 <style>
 body {
 	font-family: Arial;
@@ -116,7 +116,7 @@ body {
 						class="pure-form-message-inline">Campo necessário</span>
 				</div>
 				<div class="pure-control-group">
-					<label for="name">Email</label> <input name="emai." type="text"
+					<label for="name">Email</label> <input name="email" type="text"
 						placeholder="Coloque seu email..." required> <span
 						class="pure-form-message-inline">Campo necessário</span>
 				</div>

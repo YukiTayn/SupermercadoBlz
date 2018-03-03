@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class GerentesController {
-
+	
+	//Não tem nada hmm
 	
 }

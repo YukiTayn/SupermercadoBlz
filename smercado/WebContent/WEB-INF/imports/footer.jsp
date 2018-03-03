@@ -12,9 +12,6 @@
     background-color: #00b2b2;
     clear: left;
     text-align: center;
-    position: fixed;
-    left: 0;
-    bottom: 0;
      width: 100%;
 }
 	

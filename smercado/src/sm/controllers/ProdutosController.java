@@ -7,8 +7,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import sm.daos.DadosDAO;
@@ -21,7 +19,6 @@ public class ProdutosController {
 	ProdutoDAO pdao = new ProdutoDAO();
 	DadosDAO ddao = new DadosDAO();
 
-	// Link
 	@GetMapping("produtos/novo")
 	public ModelAndView linkCadastro(HttpSession s) {
 
@@ -37,7 +34,6 @@ public class ProdutosController {
 		return mav;
 	}
 
-	// Funções
 	@PostMapping(value = "produtos/novo")
 	public String cadastro(Produto p, HttpSession s) {
 
@@ -65,7 +61,10 @@ public class ProdutosController {
 			mav.addObject("prod", prod);
 		} else {
 
-			mav.setViewName("login/cadastro");
+			String l = "Você precisa estar logado/ter uma conta para acessar essa área";
+
+			s.setAttribute("loginLista", l);
+			mav.setViewName("usuarios/form/form");
 
 		}
 
@@ -84,16 +83,19 @@ public class ProdutosController {
 	}
 
 	@GetMapping(value = "produtos/remover")
-	public String remover(long id, HttpSession s) {
+	public ModelAndView remover(long id, HttpSession s) {
 
 		String email = (String) s.getAttribute("email");
+		ModelAndView mav = new ModelAndView();
 
 		if (email != null && ddao.getTipoByEmail(email) == 3 || ddao.getTipoByEmail(email) == 4) {
 			pdao.apagar(id);
-			return "redirect:produtos";
+			return listar(s);
 		} else {
-			return "redirect:bkp/acessoNegado";
+			mav.setViewName("bkp/acessoNegado");
 		}
+		
+		return mav;
 
 	}
 

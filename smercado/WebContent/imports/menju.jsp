@@ -114,21 +114,21 @@
 <body>
 	<div class="navbar">
 		<div class="teste12">
-			<a href="/smercado">Início</a>
+			<a href="#home">Início</a>
 			<c:choose>
 				<c:when test="${not empty cargo}">
-					<a href="/smercado/painel">Painel</a>
+					<a href="painel">Painel</a>
 				</c:when>
 				<c:when test="${empty cargo}">
 					<div class="dropdown">
 						<button class="dropbtn">
-							Algo <i class="fa fa-carrent-down"></i>
+							Função <i class="fa fa-carrent-down"></i>
 						</button>
 						<div class="dropdown-content">
-							<a href="/smercado/dados/login">Login</a> <a
-								href="/smercado/dados/cadastro">Cadastro</a>
+							<a href="dados/login">Login</a>
+							<a href="dados/cadastro">Cadastro</a>
 						</div>
-					</div>
+					</div>	
 				</c:when>
 			</c:choose>
 
@@ -138,7 +138,7 @@
 			<button class="dropbtn">
 				Produtos <i class="fa fa-caret-down"></i>
 			</button>
-			<div class="dropdown-content">
+			<div class="dropdown-content" >
 				<form action="/smercado/produtos/pesquisa" method="POST">
 					<label>Pesquisa: </label><input type=text
 						placeholder="Nome do produto..." name=nome>&nbsp
@@ -146,13 +146,13 @@
 				</form>
 				<c:choose>
 					<c:when test="${cargo == 'gerente'}">
-						<a href="/smercado/produtos/novo">Cadastro de produtos</a>
+						<a href="produtos/novo">Cadastro de produtos</a>
 					</c:when>
 					<c:when test="${cargo == 'administrador'}">
-						<a href="/smercado/produtos/novo">Cadastro de produtos</a>
+						<a href="produtos/novo">Cadastro de produtos</a>
 					</c:when>
 				</c:choose>
-				<a href="/smercado/produtos">Lista de produtos</a>
+				<a href="produtos">Lista de produtos</a>
 			</div>
 		</div>
 
@@ -176,9 +176,10 @@
 					Dados <i class="fa fa-caret-down"></i>
 				</button>
 				<div class="dropdown-content">
-					<a href="/smercado/dados/apagar">Apagar conta</a> <a
-						href="/smercado/dados/alterar?id=<%=session.getAttribute("id")%>">Alterar
-						SEUS dados</a> <a href="/smercado/logout">Logout</a>
+					<a href="dados/apagar">Apagar conta</a> 
+					<a href="dados/alterar?id=<%=session.getAttribute("id")%>">Alterar
+				SEUS dados</a>
+					<a href="logout">Logout</a>
 				</div>
 			</div>
 		</c:if>
@@ -189,57 +190,43 @@
 					Gerenciamento <i class="fa fa-caret-down"></i>
 				</button>
 				<div class="dropdown-content">
-					<a href="/smercado/dados/listar">Lista de dados</a>
+					<a href="dados/listar">Lista de dados</a>
+					
 				</div>
 			</div>
 		</c:if>
 
-		<c:choose>
-			<c:when test="${cargo == 'gerente' }">
-				<div class="dropdown">
-					<button class="dropbtn">
-						Vendas <i class="fa fa-caret-down"></i>
-					</button>
-					<div class="dropdown-content">
-						<a href="/smercado/vendas/">Lista de vendas</a>
-					</div>
+		<c:if test="${cargo == 'gerente'}">
+			<div class="dropdown">
+				<button class="dropbtn">
+					Vendas <i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-content">
+					<a href="vendas/">Lista de vendas</a>
 				</div>
-			</c:when>
-			<c:when test="${cargo == 'administrador' }">
-				<div class="dropdown">
-					<button class="dropbtn">
-						Vendas <i class="fa fa-caret-down"></i>
-					</button>
-					<div class="dropdown-content">
-						<a href="/smercado/vendas/">Lista de vendas</a>
-					</div>
-				</div>
-			</c:when>
-		</c:choose>
+			</div>
+		</c:if>
 
-		<c:choose>
-			<c:when test="${cargo == 'gerente' }">
-				<div class="dropdown">
-					<button class="dropbtn">
-						Entregas <i class="fa fa-caret-down"></i>
-					</button>
-					<div class="dropdown-content">
-						<a href="/smercado/entregas/lista">Lista de entregas</a>
-					</div>
+		<c:if test="${cargo == 'gerente'}">
+			<div class="dropdown">
+				<button class="dropbtn">
+					Entregas <i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-content">
+					<a href="entregas/lista">Lista de entregas</a>
 				</div>
-			</c:when>
-			<c:when test="${cargo == 'administrador' }">
-				<div class="dropdown">
-					<button class="dropbtn">
-						Entregas <i class="fa fa-caret-down"></i>
-					</button>
-					<div class="dropdown-content">
-						<a href="/smercado/entregas/lista">Lista de entregas</a>
-					</div>
+			</div>
+		</c:if>
+		<c:if test="${cargo == 'administrador'}">
+			<div class="dropdown">
+				<button class="dropbtn">
+					Entregas <i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-content">
+					<a href="entregas/lista">Lista de entregas</a>
 				</div>
-			</c:when>
-		</c:choose>
-
+			</div>
+		</c:if>
 	</div>
 </body>
 </html>

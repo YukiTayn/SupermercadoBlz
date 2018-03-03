@@ -125,10 +125,10 @@
 							Algo <i class="fa fa-carrent-down"></i>
 						</button>
 						<div class="dropdown-content">
-							<a href="/smercado/dados/login">Login</a>
-							<a href="/smercado/dados/cadastro">Cadastro</a>
+							<a href="/smercado/dados/login">Login</a> <a
+								href="/smercado/dados/cadastro">Cadastro</a>
 						</div>
-					</div>	
+					</div>
 				</c:when>
 			</c:choose>
 
@@ -138,7 +138,7 @@
 			<button class="dropbtn">
 				Produtos <i class="fa fa-caret-down"></i>
 			</button>
-			<div class="dropdown-content" >
+			<div class="dropdown-content">
 				<form action="/smercado/produtos/pesquisa" method="POST">
 					<label>Pesquisa: </label><input type=text
 						placeholder="Nome do produto..." name=nome>&nbsp
@@ -176,10 +176,9 @@
 					Dados <i class="fa fa-caret-down"></i>
 				</button>
 				<div class="dropdown-content">
-					<a href="/smercado/dados/apagar">Apagar conta</a> 
-					<a href="/smercado/dados/alterar?id=<%=session.getAttribute("id")%>">Alterar
-				SEUS dados</a>
-					<a href="/smercado/logout">Logout</a>
+					<a href="/smercado/dados/apagar">Apagar conta</a> <a
+						href="/smercado/dados/alterar?id=<%=session.getAttribute("id")%>">Alterar
+						SEUS dados</a> <a href="/smercado/logout">Logout</a>
 				</div>
 			</div>
 		</c:if>
@@ -191,44 +190,56 @@
 				</button>
 				<div class="dropdown-content">
 					<a href="/smercado/dados/listar">Lista de dados</a>
-					<a href="#">#2</a> 
-					<a href="#">#3</a>
 				</div>
 			</div>
 		</c:if>
 
-		<c:if test="${cargo == 'gerente'}">
-			<div class="dropdown">
-				<button class="dropbtn">
-					Vendas <i class="fa fa-caret-down"></i>
-				</button>
-				<div class="dropdown-content">
-					<a href="/smercado/vendas/">Lista de vendas</a> <a href="#">Adicionar venda</a> <a
-						href="#">#3</a>
+		<c:choose>
+			<c:when test="${cargo == 'gerente' }">
+				<div class="dropdown">
+					<button class="dropbtn">
+						Vendas <i class="fa fa-caret-down"></i>
+					</button>
+					<div class="dropdown-content">
+						<a href="/smercado/vendas/">Lista de vendas</a>
+					</div>
 				</div>
-			</div>
-		</c:if>
+			</c:when>
+			<c:when test="${cargo == 'administrador' }">
+				<div class="dropdown">
+					<button class="dropbtn">
+						Vendas <i class="fa fa-caret-down"></i>
+					</button>
+					<div class="dropdown-content">
+						<a href="/smercado/vendas/">Lista de vendas</a>
+					</div>
+				</div>
+			</c:when>
+		</c:choose>
 
-		<c:if test="${cargo == 'gerente'}">
-			<div class="dropdown">
-				<button class="dropbtn">
-					Entregas <i class="fa fa-caret-down"></i>
-				</button>
-				<div class="dropdown-content">
-					<a href="/smercado/entregas/lista">Lista de entregas</a>
+		<c:choose>
+			<c:when test="${cargo == 'gerente' }">
+				<div class="dropdown">
+					<button class="dropbtn">
+						Entregas <i class="fa fa-caret-down"></i>
+					</button>
+					<div class="dropdown-content">
+						<a href="/smercado/entregas/lista">Lista de entregas</a>
+					</div>
 				</div>
-			</div>
-		</c:if>
-		<c:if test="${cargo == 'administrador'}">
-			<div class="dropdown">
-				<button class="dropbtn">
-					Entregas <i class="fa fa-caret-down"></i>
-				</button>
-				<div class="dropdown-content">
-					<a href="/smercado/entregas/lista">Lista de entregas</a>
+			</c:when>
+			<c:when test="${cargo == 'administrador' }">
+				<div class="dropdown">
+					<button class="dropbtn">
+						Entregas <i class="fa fa-caret-down"></i>
+					</button>
+					<div class="dropdown-content">
+						<a href="/smercado/entregas/lista">Lista de entregas</a>
+					</div>
 				</div>
-			</div>
-		</c:if>
+			</c:when>
+		</c:choose>
+
 	</div>
 </body>
 </html>

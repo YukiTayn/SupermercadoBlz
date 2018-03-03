@@ -26,39 +26,9 @@ public class EntregasController {
 	EntregasDAO edao = new EntregasDAO();
 	ProdutoDAO pdao = new ProdutoDAO();
 	Entregas e = new Entregas();
+	
+	DadosController dc = new DadosController();
 
-	// // Link
-	// @GetMapping("entregas/nova")
-	// public String formEntrega(Entregas e, HttpSession s) {
-	//
-	// String email = (String) s.getAttribute("email");
-	//
-	// long gerente = ddao.getID(email);
-	// Calendar dataP = Calendar.getInstance();
-	// int stt = 1;
-	//
-	// e.setGerente(gerente);
-	// e.setDataPedido(dataP);
-	// e.setStt(stt);
-	//
-	// System.out.println(e.getGerente());
-	// System.out.println(e.getEntregador());
-	// System.out.println(e.getProduto());
-	// System.out.println(e.getQtd());
-	// System.out.println(e.getDataPedido());
-	// System.out.println(e.getStt());
-	//
-	// // if(ddao.getTipoByEmail(email) == 3) {
-	// // return "entregas/form";
-	// // }else {
-	// // return "acesso negado";
-	// // }
-	//
-	// return "redirect:/";
-	//
-	// }
-
-	// Ações das entregas
 	@PostMapping(value = "entregas/nova")
 	public String nova(Entregas ent, HttpSession s) {
 
@@ -82,7 +52,6 @@ public class EntregasController {
 				List<Entregas> neg = edao.Negados();
 				List<Produto> produtos = pdao.getProdutos();
 				List<Dados> dados = ddao.getEntregadores();
-				// List<Dados> ent = ddao.getEntregadores();
 
 				s.setAttribute("abertas", abertas);
 				s.setAttribute("pegas", pegas);
@@ -103,29 +72,6 @@ public class EntregasController {
 			return "redirect:bkp/acessoNegado";
 		}
 
-		// String email = (String)s.getAttribute("email");
-		//
-		// if(email != null) {
-		//
-		// if(ddao.getTipoByEmail(email) == 3) {
-		// Calendar cal = Calendar.getInstance();
-		// ent.setDataPedido(cal);
-		// ent.setStt(1);
-		// edao.PedirEntrega(ent);
-		//
-		// return blank();
-		//
-		// }else {
-		//
-		// System.out.println("Sem acesso");
-		// return blank();
-		// }
-		//
-		// }else {
-		// System.out.println("Sem login");
-		// return blank();
-		// }
-
 	}
 
 	@GetMapping(value = "entregas/cancelar")
@@ -144,7 +90,6 @@ public class EntregasController {
 				List<Entregas> neg = edao.Negados();
 				List<Produto> produtos = pdao.getProdutos();
 				List<Dados> dados = ddao.getEntregadores();
-				// List<Dados> ent = ddao.getEntregadores();
 
 				s.setAttribute("abertas", abertas);
 				s.setAttribute("pegas", pegas);
@@ -162,7 +107,7 @@ public class EntregasController {
 
 		} else {
 			System.out.println("Sem login");
-			return "bkp/error";
+			return dc.cliente(s);
 		}
 	}
 
@@ -202,7 +147,7 @@ public class EntregasController {
 
 		} else {
 			System.out.println("Sem login");
-			return "redirect:bkp/error";
+			return dc.cliente(s);
 		}
 	}
 
@@ -217,7 +162,6 @@ public class EntregasController {
 
 				edao.PegarEntrega(id);
 
-				
 				long idd = ddao.getID(email);
 				List<Entregas> abertas = edao.getEntAbID(idd);
 				List<Entregas> pegas = edao.getEntPgID(idd);
@@ -238,7 +182,7 @@ public class EntregasController {
 
 		} else {
 			System.out.println("Sem login ou sem acesso");
-			return "redirect:bkp/error";
+			return dc.cliente(s);
 		}
 	}
 
@@ -246,12 +190,11 @@ public class EntregasController {
 	public String negar(long id, HttpSession s) {
 
 		String email = (String) s.getAttribute("email");
-		
 
 		if (email != null && ddao.getTipoByEmail(email) == 5) {
 
 			long idd = ddao.getID(email);
-			
+
 			if (ddao.getTipoByEmail(email) == 5) {
 
 				edao.NegarEntrega(id);
@@ -275,7 +218,7 @@ public class EntregasController {
 
 		} else {
 			System.out.println("Sem login ou sem acesso");
-			return "redirect:bkp/error";
+			return dc.cliente(s);
 		}
 	}
 

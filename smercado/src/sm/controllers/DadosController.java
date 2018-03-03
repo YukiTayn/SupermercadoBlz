@@ -31,14 +31,13 @@ public class DadosController {
 
 	Dados d = new Dados();
 
-	// Chamados dos forms
 	@GetMapping("dados/cadastro")
-	public String cliente() {
+	public String cliente(HttpSession s) {
 
+		s.invalidate();
 		return "usuarios/form/form";
 	}
 
-	// Cadastros
 	@PostMapping(value = "dados/cadastro")
 	public String cliente(Dados d, HttpSession s) {
 
@@ -50,6 +49,11 @@ public class DadosController {
 		}
 
 		if (ddao.novo(d) == true) {
+			
+			List<Dados> dados = ddao.getContas();
+			s.removeAttribute("contas");
+			s.setAttribute("contas", dados);
+			
 			return "usuarios/form/obg";
 		} else {
 			return "bkp/error";
@@ -71,7 +75,7 @@ public class DadosController {
 			return retorno;
 
 		} else {
-			return "cadastro";
+			return cliente(s);
 		}
 
 	}
@@ -95,7 +99,6 @@ public class DadosController {
 		return mav;
 	}
 
-	// Apagar
 	@GetMapping(value = "dados/apagar")
 	public ModelAndView apagar() {
 
@@ -104,7 +107,7 @@ public class DadosController {
 	}
 
 	@PostMapping(value = "dados/apagar")
-	public String apagar(Dados d) {
+	public String apagar(Dados d, HttpSession s) {
 
 		System.out.println(">>> Dados apagados");
 		System.out.println(d.getEmail());
@@ -115,11 +118,12 @@ public class DadosController {
 		} else {
 			System.out.println("Erro ao apagar");
 		}
+		
+		s.invalidate();
 
 		return "redirect:/";
 	}
 
-	// Alterar
 	@GetMapping(value = "dados/alterar")
 	public ModelAndView alterar(long id) {
 
@@ -132,17 +136,18 @@ public class DadosController {
 	}
 
 	@PostMapping(value = "dados/alterar")
-	public String alterar(Dados d) {
+	public String alterar(Dados d, HttpSession s) {
 
 		ddao.alterar(d);
+		s.setAttribute("nome", d.getNome());
 
-		return "painel";
+		return painel(s);
 	}
 
-	// Login
 	@GetMapping(value = "dados/login")
 	public String login(HttpSession s) {
 
+		s.removeAttribute("contas");
 		List<Dados> contas = ddao.getContas();
 		s.setAttribute("contas", contas);
 
@@ -202,7 +207,7 @@ public class DadosController {
 
 		} else {
 			System.out.println("Email não existe");
-			return cliente();
+			return cliente(s);
 		}
 
 		return null;
@@ -210,9 +215,6 @@ public class DadosController {
 	}
 
 	public String loginCliente(String email, HttpSession s) {
-
-		// ModelAndView mav = new ModelAndView();
-		// mav.setViewName("usuarios/1");
 
 		long id = ddao.getID(email);
 
@@ -228,9 +230,6 @@ public class DadosController {
 
 	public String loginVend(String email, HttpSession s) {
 
-		// ModelAndView mav = new ModelAndView();
-		// mav.setViewName("usuarios/2");
-
 		long id = ddao.getID(email);
 
 		s.setAttribute("vendedor", email);
@@ -240,7 +239,6 @@ public class DadosController {
 		s.setAttribute("vendas", vendas);
 		s.setAttribute("produtos", produtos);
 
-		// Painel - Fazer pedido
 		List<Dados> ent = ddao.getEntregadores();
 		s.setAttribute("ent", ent);
 
@@ -248,9 +246,6 @@ public class DadosController {
 	}
 
 	public String loginGerente(String email, HttpSession s) {
-
-		// ModelAndView mav = new ModelAndView();
-		// mav.setViewName("usuarios/3");
 
 		List<Entregas> abertas = edao.Abertas();
 		List<Entregas> pegas = edao.Pegas();
@@ -271,9 +266,6 @@ public class DadosController {
 
 	public String loginAdmin(String email, HttpSession s) {
 
-		// ModelAndView mav = new ModelAndView();
-		// mav.setViewName("usuarios/4");
-
 		List<Vendas> vendas = vdao.getVendas();
 		s.setAttribute("vendas", vendas);
 
@@ -281,9 +273,6 @@ public class DadosController {
 	}
 
 	public String loginEntreg(String email, HttpSession s) {
-
-		// ModelAndView mav = new ModelAndView();
-		// mav.setViewName("usuarios/5");
 
 		long id = ddao.getID(email);
 
@@ -305,47 +294,5 @@ public class DadosController {
 		s.invalidate();
 		return "redirect:/";
 	}
-
-	// public String entregador() {
-	//
-	// return "usuarios/form/ent";
-	// }
-	//
-	// public String gerente() {
-	//
-	// return "usuarios/form/gerente";
-	// }
-	//
-	// public String vendedor() {
-	//
-	// return "usuarios/form/vendedor";
-	// }
-
-	// @RequestMapping(value="dados/ent", method=RequestMethod.POST)
-	// public ModelAndView entregador(Dados d) {
-	//
-	// d.setTipo(5);
-	// ddao.novo(d);
-	//
-	// return listar();
-	// }
-	//
-	// @RequestMapping(value="dados/gerente", method=RequestMethod.POST)
-	// public ModelAndView gerente(Dados d) {
-	//
-	// d.setTipo(3);
-	// ddao.novo(d);
-	//
-	// return listar();
-	// }
-	//
-	// @RequestMapping(value="dados/vendedor", method=RequestMethod.POST)
-	// public ModelAndView vendedor(Dados d) {
-	//
-	// d.setTipo(2);
-	// ddao.novo(d);
-	//
-	// return listar();
-	// }
 
 }
