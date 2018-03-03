@@ -16,7 +16,8 @@
 	</c:import> </header>
 
 	<nav> <c:import url="../../imports/menu.jsp"></c:import> </nav>
-	<div class="w3-container"><br>
+	<div class="w3-container">
+		<br>
 		<h2>Lista de entregas</h2>
 
 		<table class="w3-table-all w3-hoverable">
@@ -26,6 +27,7 @@
 				<th>Entregador</th>
 				<th>Produto</th>
 				<th>Quantidade</th>
+				<th>Data pedido</th>
 			</tr>
 
 			<c:forEach var="lista" items="${lista}">
@@ -35,6 +37,8 @@
 					<td>${lista.enttxt}</td>
 					<td>${lista.produtotxt}</td>
 					<td>${lista.qtd}</td>
+					<td><fmt:formatDate value="${lista.dataPedido.time}"
+							pattern="dd/MM/yyyy" /></td>
 
 				</tr>
 			</c:forEach>

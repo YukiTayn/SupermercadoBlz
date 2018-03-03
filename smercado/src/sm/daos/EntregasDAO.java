@@ -39,6 +39,11 @@ public class EntregasDAO {
 				e.setGerentetxt(ddao.getNomeByID(e.getGerente()));
 				e.setEnttxt(ddao.getNomeByID(e.getEntregador()));
 				
+				Calendar data = Calendar.getInstance();
+				data.setTime(rs.getDate("dataPedido"));
+				e.setDataPedido(data);
+				
+				
 				result.add(e);
 			}
 		}catch (Exception e) {
